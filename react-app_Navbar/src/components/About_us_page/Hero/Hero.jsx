@@ -1,6 +1,6 @@
 import React from "react";
 import "./Hero.css";
-import arrow from "../../assets/dark-arrow.png";
+import arrow from "../../../assets/dark-arrow.png";
 
 const Hero = () => {
   return (

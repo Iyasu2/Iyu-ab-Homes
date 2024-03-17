@@ -1,9 +1,9 @@
 import React from "react";
 import "./Homes.css";
-import home_1 from "../../assets/program-1.png";
-import home_2 from "../../assets/program-2.png";
-import home_3 from "../../assets/program-3.png";
-import program_icon from "../../assets/icon3.png";
+import home_1 from "../../../assets/program-1.png";
+import home_2 from "../../../assets/program-2.png";
+import home_3 from "../../../assets/program-3.png";
+import program_icon from "../../../assets/icon3.png";
 
 const Homes = () => {
   return (

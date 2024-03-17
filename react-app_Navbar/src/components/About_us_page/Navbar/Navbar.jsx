@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "../../assets/Home_logo.png";
-import Link from "react-scroll/modules/components/Link";
-import menu_icon from "../../assets/menu-icon.png";
+import logo from "../../../assets/Home_logo.png";
+import { Link } from "react-scroll";
+import { Link as RouteLink } from "react-router-dom";
+import menu_icon from "../../../assets/menu-icon.png";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
@@ -31,9 +32,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="homes" smooth={true} offset={-260} duration={500}>
-            Find Homes
-          </Link>
+          <RouteLink to="Search_homes">Find Homes</RouteLink>
         </li>
         <li>
           <Link to="about" smooth={true} offset={-150} duration={500}>

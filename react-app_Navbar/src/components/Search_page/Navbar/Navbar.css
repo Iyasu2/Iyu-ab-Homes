@@ -16,6 +16,7 @@ nav {
   align-items: center; /* Center items horizontally */
   gap: 10px; /* Add spacing between logo and title */
   margin-bottom: 2px;
+  margin-top: 2px;
 }
 .logo {
   width: 40px;
@@ -29,9 +30,35 @@ nav ul li {
 .dark-nav {
   background: #212ea0;
   transition: 0.5s;
+  width: 100%;
 }
 .menu-icon {
   display: none;
+}
+
+.search-input {
+  padding: 20px 10px;
+  border: none;
+  background: #f7f6f6;
+  outline: none;
+  margin-right: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 20rem;
+  height: 5px;
+  text-align: center;
+}
+
+.user-add-container {
+  margin-top: 12px;
+  position: relative;
+}
+
+.user-add-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  position: absolute;
+  top: -10px;
 }
 
 /* -------- media query ---------- */
@@ -42,6 +69,9 @@ nav ul li {
   }
   nav ul li {
     margin: 2px 15px;
+  }
+  .search-input {
+    width: 15rem;
   }
 }
 
@@ -72,5 +102,9 @@ nav ul li {
   }
   .hide-mobile-menu {
     right: -200px;
+  }
+  .search-input {
+    width: 10rem;
+    margin-left: 1px;
   }
 }
