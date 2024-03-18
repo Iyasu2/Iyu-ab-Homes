@@ -1,5 +1,3 @@
-import { AiFillTotal_Area } from "react_icons/ai";
-
 const data = [
   {
     img: "https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg",
@@ -43,7 +41,7 @@ const data = [
     Type: "Personal home",
     Total_Area: "210",
     Built_in_Area: "190",
-    State: "Dire-dawa",
+    State: "DireDawa",
     City: "Kezira",
     Town: "Kafira market",
     Floors: "Villa",

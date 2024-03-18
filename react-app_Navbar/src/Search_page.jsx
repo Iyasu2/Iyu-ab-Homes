@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Navbar from "./components/Search_page/Navbar/Navbar";
-import Products from "./components/Search_page/Products/Products";
-import products from "./components/Search_page/db/data";
 import Sidebar from "./components/Search_page/Sidebar/Sidebar";
 import Card from "./components/Search_page/Card";
 import "./components/Search_page/index_search.css";
-import homes from "components/Search_page/db/data";
+import homes from "./components/Search_page/db/data";
+import Products from "./components/Search_page/Products/Products";
 
 const Search_page = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -18,15 +17,24 @@ const Search_page = () => {
   };
 
   const filteredItems = homes.filter(
-    (home) => home.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    (home) =>
+      home.Type.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1 ||
+      home.City.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1 ||
+      home.State.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1
   );
 
   // ----------- Radio Filtering -----------
   const handleChange = (event) => {
-    setSelectedCategory(event.target.value);
+    const selectedValue = event.target.value;
+
+    if (selectedValue === "All") {
+      selectedCategory(null);
+    } else {
+      setSelectedCategory(selectedValue);
+    }
   };
 
-  const filteredData = (homes, selected, query) => {
+  const filteredhome = (homes, selected, query) => {
     let filteredhomes = homes;
 
     // Filtering Input Items
@@ -37,37 +45,55 @@ const Search_page = () => {
     // Applying selected filter
     if (selected) {
       filteredhomes = filteredhomes.filter(
-        ({ category, color, company, newPrice, title }) =>
-          category === selected ||
-          color === selected ||
-          company === selected ||
-          newPrice === selected ||
+        ({ Type, State, Accommodation, Price, title }) =>
+          selected === "All" ||
+          Type === selected ||
+          State === selected ||
+          Accommodation === selected ||
+          Price === selected ||
           title === selected
       );
     }
 
     return filteredhomes.map(
-      ({ img, title, star, reviews, prevPrice, newPrice }) => (
+      ({
+        img,
+        Type,
+        Total_Area,
+        Built_in_Area,
+        State,
+        City,
+        Town,
+        Floors,
+        Accommodation,
+        Price,
+        title,
+      }) => (
         <Card
           key={Math.random()}
           img={img}
+          Type={Type}
+          Total_Area={Total_Area}
+          Built_in_Area={Built_in_Area}
+          State={State}
+          City={City}
+          Town={Town}
+          Floors={Floors}
+          Accommodation={Accommodation}
+          Price={Price}
           title={title}
-          star={star}
-          reviews={reviews}
-          prevPrice={prevPrice}
-          newPrice={newPrice}
         />
       )
     );
   };
 
-  const result = filteredData(homes, selectedCategory, query);
+  const result = filteredhome(homes, selectedCategory, query);
 
   return (
     <>
       <Sidebar handleChange={handleChange} />
-      <Navbar />
-      <homes result={result} />
+      <Navbar query={query} handleInputChange={handleInputChange} />
+      <Products result={result} />
     </>
   );
 };

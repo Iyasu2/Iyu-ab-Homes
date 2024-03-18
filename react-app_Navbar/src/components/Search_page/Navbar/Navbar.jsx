@@ -6,7 +6,7 @@ import { Link as RouteLink } from "react-router-dom";
 import menu_icon from "../../../assets/menu-icon.png";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
-const Navbar = () => {
+const Navbar = ({ handleInputChange, query }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const toggleMenu = () => {
     mobileMenu ? setMobileMenu(false) : setMobileMenu(true);
@@ -21,8 +21,10 @@ const Navbar = () => {
       <ul className={mobileMenu ? "" : "hide-mobile-menu"}>
         <li>
           <input
-            type="text"
             className="search-input"
+            type="text"
+            onChange={handleInputChange}
+            value={query}
             placeholder="Search homes"
           />
         </li>

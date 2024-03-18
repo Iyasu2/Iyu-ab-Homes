@@ -1,4 +1,15 @@
-const Card = () => {
+const Card = ({
+  img,
+  Type,
+  Total_Area,
+  Built_in_Area,
+  State,
+  City,
+  Town,
+  Floors,
+  Accommodation,
+  Price,
+}) => {
   return (
     <section className="card">
       <img
@@ -8,22 +19,22 @@ const Card = () => {
       <div className="card-details">
         <div className="left-items">
           <ul>
-            <li>Type</li>
-            <li>Total Area</li>
-            <li>Built-in Area</li>
-            <li>State</li>
+            <li>Type: {Type}</li>
+            <li>Total Area: {Total_Area}</li>
+            <li>Built-in Area: {Built_in_Area} </li>
+            <li>State: {State} </li>
           </ul>
         </div>
         <div className="left-items">
           <ul>
-            <li>City</li>
-            <li>Town</li>
-            <li>floors</li>
-            <li>accommodation</li>
+            <li>City: {City} </li>
+            <li>Town:{Town} </li>
+            <li>Floors: {Floors}</li>
+            <li>Accommodation:{Accommodation} </li>
           </ul>
         </div>
         <div className="card-price">
-          <div className="price">32000000 Birr</div>
+          <div className="price">{Price} Birr</div>
         </div>
       </div>
     </section>

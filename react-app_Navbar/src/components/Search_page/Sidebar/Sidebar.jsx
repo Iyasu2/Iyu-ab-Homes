@@ -13,7 +13,7 @@ const Sidebar = ({ handleChange }) => {
         </div>
         <Accommodation handleChange={handleChange} />
         <Price handleChange={handleChange} />
-        <State />
+        <State handleChange={handleChange} />
         <Type handleChange={handleChange} />
       </section>
     </>
