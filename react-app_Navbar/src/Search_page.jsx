@@ -28,7 +28,7 @@ const Search_page = () => {
     const selectedValue = event.target.value;
 
     if (selectedValue === "All") {
-      selectedCategory(null);
+      setSelectedCategory(null);
     } else {
       setSelectedCategory(selectedValue);
     }
@@ -45,13 +45,26 @@ const Search_page = () => {
     // Applying selected filter
     if (selected) {
       filteredhomes = filteredhomes.filter(
-        ({ Type, State, Accommodation, Price, title }) =>
-          selected === "All" ||
-          Type === selected ||
-          State === selected ||
-          Accommodation === selected ||
-          Price === selected ||
-          title === selected
+        ({ Type, State, Accommodation, Price, title }) => {
+          if (selected === "All") {
+            return true;
+          }
+
+          if (selected.indexOf("-") !== -1) {
+            // Price range filter
+            const [min, max] = selected.split("-").map(Number);
+            const parsedPrice = parseInt(Price);
+            return parsedPrice > min && parsedPrice <= max;
+          }
+
+          return (
+            Type === selected ||
+            State === selected ||
+            Accommodation === selected ||
+            Price === selected ||
+            title === selected
+          );
+        }
       );
     }
 

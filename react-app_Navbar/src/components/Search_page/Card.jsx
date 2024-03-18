@@ -10,6 +10,23 @@ const Card = ({
   Accommodation,
   Price,
 }) => {
+  // Function to format price with commas
+  const formatPriceWithCommas = (price) => {
+    const priceStr = price.toString();
+    const [integerPart, decimalPart] = priceStr.split(".");
+    const formattedIntegerPart = integerPart.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+    const formattedPrice = decimalPart
+      ? `${formattedIntegerPart}.${decimalPart}`
+      : formattedIntegerPart;
+    return formattedPrice;
+  };
+
+  // Format the price
+  const formattedPrice = formatPriceWithCommas(Price);
+
   return (
     <section className="card">
       <img
@@ -34,7 +51,7 @@ const Card = ({
           </ul>
         </div>
         <div className="card-price">
-          <div className="price">{Price} Birr</div>
+          <div className="price">{formattedPrice} Birr</div>
         </div>
       </div>
     </section>
