@@ -7,7 +7,7 @@ import homes from "./components/Search_page/db/data";
 import Products from "./components/Search_page/Products/Products";
 
 const Search_page = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
@@ -24,14 +24,25 @@ const Search_page = () => {
   );
 
   // ----------- Radio Filtering -----------
-  const handleChange = (event) => {
+  const handleChange = (event, category) => {
     const selectedValue = event.target.value;
 
-    if (selectedValue === "All") {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(selectedValue);
-    }
+    setSelectedCategory((prevSelectedCategory) => {
+      // Find the index of the existing category in the array
+      const index = prevSelectedCategory.findIndex(
+        (item) => item.category === category
+      );
+
+      // If the category is already in the array, update its value
+      if (index !== -1) {
+        return prevSelectedCategory.map((item, i) =>
+          i === index ? { category, value: selectedValue } : item
+        );
+      }
+
+      // If the category is not in the array, add it
+      return [...prevSelectedCategory, { category, value: selectedValue }];
+    });
   };
 
   const filteredhome = (homes, selected, query) => {
@@ -43,29 +54,27 @@ const Search_page = () => {
     }
 
     // Applying selected filter
-    if (selected) {
-      filteredhomes = filteredhomes.filter(
-        ({ Type, State, Accommodation, Price, title }) => {
-          if (selected === "All") {
-            return true;
-          }
-
-          if (selected.indexOf("-") !== -1) {
-            // Price range filter
-            const [min, max] = selected.split("-").map(Number);
-            const parsedPrice = parseInt(Price);
-            return parsedPrice > min && parsedPrice <= max;
-          }
-
-          return (
-            Type === selected ||
-            State === selected ||
-            Accommodation === selected ||
-            Price === selected ||
-            title === selected
-          );
+    const match_selected = (home, selected) => {
+      const matchingPairs = [];
+      for (const { category, value } of selected) {
+        if (category === "All") {
+          return matchingPairs;
         }
-      );
+        if (home[category] !== value) {
+          return []; // If a pair doesn't match, return an empty array
+        }
+        matchingPairs.push({ [category]: value });
+      }
+      console.log(matchingPairs);
+      return matchingPairs; // If all pairs match, return the matching pairs
+    };
+
+    // Applying selected filter
+    if (selected) {
+      filteredhomes = filteredhomes.filter((home) => {
+        const matchingPairs = match_selected(home, selected);
+        return matchingPairs.length > 0;
+      });
     }
 
     return filteredhomes.map(
