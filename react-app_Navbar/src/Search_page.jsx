@@ -28,6 +28,13 @@ const Search_page = () => {
     const selectedValue = event.target.value;
 
     setSelectedCategory((prevSelectedCategory) => {
+      // If "All" is selected, remove all pairs with the same category
+      if (selectedValue === "All") {
+        return prevSelectedCategory.filter(
+          (item) => item.category !== category
+        );
+      }
+
       // Find the index of the existing category in the array
       const index = prevSelectedCategory.findIndex(
         (item) => item.category === category
@@ -60,17 +67,27 @@ const Search_page = () => {
         if (category === "All") {
           return matchingPairs;
         }
-        if (home[category] !== value) {
-          return []; // If a pair doesn't match, return an empty array
+        if (category === "Price") {
+          // Parse the value into min and max
+          const [min, max] = value.split("-").map(Number);
+          // Check if the home's price is within the range
+          if (home[category] > min && home[category] <= max) {
+            matchingPairs.push({ [category]: value });
+          } else {
+            return []; // If the home's price is not within the range, return an empty array
+          }
+        } else {
+          if (home[category] !== value) {
+            return []; // If a pair doesn't match, return an empty array
+          }
+          matchingPairs.push({ [category]: value });
         }
-        matchingPairs.push({ [category]: value });
       }
-      console.log(matchingPairs);
       return matchingPairs; // If all pairs match, return the matching pairs
     };
 
     // Applying selected filter
-    if (selected) {
+    if (selected && selected.length > 0) {
       filteredhomes = filteredhomes.filter((home) => {
         const matchingPairs = match_selected(home, selected);
         return matchingPairs.length > 0;
