@@ -1,3 +1,5 @@
+import program_icon from "../../assets/icon3.png";
+
 const Card = ({
   img,
   Type,
@@ -29,26 +31,32 @@ const Card = ({
 
   return (
     <section className="card">
-      <img
-        src="https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg"
-        alt="House"
-      />
       <div className="card-details">
-        <div className="left-items">
-          <ul>
-            <li>Type: {Type}</li>
-            <li>Total Area: {Total_Area}</li>
-            <li>Built-in Area: {Built_in_Area} </li>
-            <li>State: {State} </li>
-          </ul>
+        <img
+          src="https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg"
+          alt="House"
+        />
+
+        <div className="caption">
+          <img src={program_icon} />
+          <p>See more</p>
         </div>
-        <div className="left-items">
-          <ul>
-            <li>City: {City} </li>
-            <li>Town:{Town} </li>
-            <li>Floors: {Floors}</li>
-            <li>Accommodation:{Accommodation} </li>
-          </ul>
+
+        <div className="items-wrapper">
+          <div className="left-items">
+            <ul>
+              <li>City: {City} </li>
+              <li>Town:{Town} </li>
+              <li>State: {State} </li>
+            </ul>
+          </div>
+          <div className="right-items">
+            <ul>
+              <li>Type: {Type}</li>
+              <li>Floors: {Floors}</li>
+              <li>Accommodation:{Accommodation} </li>
+            </ul>
+          </div>
         </div>
         <div className="card-price">
           <div className="price">{formattedPrice} Birr</div>

@@ -1,36 +1,82 @@
 .card-container {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  margin-left: 15rem;
+  margin-left: 17.5rem;
+  margin-right: 2rem;
   margin-top: 4rem;
   z-index: -2;
 }
 
 .card {
-  flex-basis: calc(40% - 10px);
-  margin: 10px;
+  flex-basis: calc(33.33% - 10px);
+  margin: 5px;
+  margin-top: 30px;
   border: 2px solid #ededed;
   padding: 20px;
   cursor: pointer;
   box-sizing: border-box;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: block;
 }
 
-.card-img {
-  width: 13rem;
-  margin-bottom: 1rem;
+.card-details img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
 }
 
 .card-details {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-basis: 31%;
 }
 
-.left-items,
+.caption {
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 15, 152, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  padding-top: 70%;
+  transition: 0.4s;
+}
+.caption img {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.card-details:hover .caption {
+  opacity: 1;
+  padding-top: 0;
+}
+
+.items-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-items {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
 .right-items {
   flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 ul {
@@ -46,4 +92,55 @@ li {
 .card-price {
   flex-basis: 100%;
   margin-top: 10px;
+}
+
+/* -------- media query ---------- */
+
+@media (max-width: 1400px) {
+  .items-wrapper {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .card {
+    flex-basis: calc(50% - 10px);
+  }
+  .items-wrapper {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .items-wrapper {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 950px) {
+  .card {
+    flex-basis: calc(100% - 10px);
+  }
+  .items-wrapper {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 800px) {
+  .card-container {
+    margin-left: 12rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .items-wrapper {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 580px) {
+  .items-wrapper {
+    font-size: 13px;
+  }
 }

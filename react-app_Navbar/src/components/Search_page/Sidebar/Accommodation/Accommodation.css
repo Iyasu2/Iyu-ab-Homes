@@ -1,11 +1,35 @@
+.Accom-style {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .sidebar-title {
   font-size: 22px;
   font-weight: normal;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  margin-right: 30px;
+  padding-left: 10px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  min-width: 200px;
+  justify-content: space-between;
+}
+.arrow-down {
+  margin-left: 1px;
+  margin-right: 5px;
+  font-size: 14px;
 }
 
-.sidebar-items {
-  margin-top: 20px;
+.Accom-list-style {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
 }
 
 .sidebar-label-container {
@@ -70,4 +94,14 @@
 .line {
   margin-top: 3rem;
   border-color: #f7f7f7;
+}
+
+/* -------- media query ---------- */
+
+@media (max-width: 800px) {
+  .sidebar-title {
+    font-size: 16px;
+    min-width: 150px;
+    margin-right: 4px;
+  }
 }
