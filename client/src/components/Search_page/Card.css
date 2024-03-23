@@ -1,0 +1,65 @@
+.card {
+  background-color: rgb(33, 71, 128);
+  border: none; /* Remove border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow for elevation */
+  position: relative; /* Ensure positioning context */
+  overflow: hidden; /* Hide overflowing elements */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transition box shadow and transform */
+  min-width: 180px;
+  max-width: 400px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger box shadow on hover */
+  transform: scale(1.05); /* Scale the card on hover */
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; /* Position at the top of the card */
+  left: 0;
+  width: 100%;
+  height: 0; /* Start with zero height */
+  background-color: rgba(31, 175, 253, 0.308); /* Change color and opacity */
+  transition: height 0.3s ease; /* Transition for the effect */
+  z-index: 2; /* Ensure the overlay is above the content */
+}
+
+.card:hover::before {
+  height: 100%; /* Expand the overlay to the top on hover */
+}
+
+.card::before {
+  top: 0;
+  left: 0;
+  transform: scaleX(0); /* Initial state: no width */
+}
+
+.card::after {
+  bottom: 0;
+  right: 0;
+  transform: scaleX(0); /* Initial state: no width */
+}
+
+.card:hover::before,
+.card:hover::after {
+  transform: scaleX(1); /* Expand the overlay on hover */
+}
+
+.card .dark-bg {
+  background-color: #333; /* Dark background color */
+  height: auto; /* Allow height to adjust based on content */
+  margin-bottom: 10px;
+}
+
+.card .description-area {
+  position: relative;
+  padding: 5px 15px 15px 15px;
+}
+
+.card .content {
+  position: relative;
+  z-index: 1;
+  color: #fff; /* White text color */
+}
