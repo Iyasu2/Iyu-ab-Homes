@@ -1,3 +1,10 @@
+.hero-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 20px;
+  border: none;
+}
+
 .hero {
   width: 100%;
   min-height: 100vh;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../Input";
+import { Button, Collapse } from "react-bootstrap"; // Import Bootstrap Button and Collapse components
+import { ExpandMore, ExpandLess } from "@mui/icons-material"; // Assuming you're using MUI Icons
 
 const Type = ({ handleChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,11 +17,15 @@ const Type = ({ handleChange }) => {
 
   return (
     <div className="Accom-style">
-      <button className="sidebar-title" onClick={toggleDropdown}>
-        Type <span className="arrow-down">&#9660;</span>
-      </button>
+      <Button
+        className="sidebar-title"
+        onClick={toggleDropdown}
+        variant="primary"
+      >
+        Type {showDropdown ? <ExpandLess /> : <ExpandMore />}
+      </Button>
 
-      {showDropdown && (
+      <Collapse in={showDropdown}>
         <div className="Accom-list-style">
           <label className="sidebar-label-container">
             <input
@@ -27,6 +33,7 @@ const Type = ({ handleChange }) => {
               type="radio"
               value="All"
               name="test4"
+              className="form-check-input"
             />
             <span className="checkmark"></span>All
           </label>
@@ -49,7 +56,7 @@ const Type = ({ handleChange }) => {
             name="test4"
           />
         </div>
-      )}
+      </Collapse>
     </div>
   );
 };

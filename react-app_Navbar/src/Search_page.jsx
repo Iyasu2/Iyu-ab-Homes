@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import Navbar from "./components/Search_page/Navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Search_page/Sidebar/Sidebar";
-import Card from "./components/Search_page/Card";
-import "./components/Search_page/index_search.css";
+import { Container, Row, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBuilding,
+  faMapMarkerAlt,
+  faHome,
+  faBed,
+  faMoneyBillAlt,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import homes from "./components/Search_page/db/data";
-import Products from "./components/Search_page/Products/Products";
+import CardComponent from "./components/Search_page/Card";
+import "./Search_page.css";
+import Search from "./components/Search_page/Search/Search";
 
 const Search_page = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
-
-  // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
 
   const handleInputChange = (event) => {
@@ -18,36 +26,31 @@ const Search_page = () => {
 
   const filteredItems = homes.filter(
     (home) =>
-      home.Type.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1 ||
-      home.City.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1 ||
-      home.State.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) !== -1
+      home.Type.toLowerCase().includes(query.toLowerCase()) ||
+      home.City.toLowerCase().includes(query.toLowerCase()) ||
+      home.State.toLowerCase().includes(query.toLowerCase())
   );
 
-  // ----------- Radio Filtering -----------
   const handleChange = (event, category) => {
     const selectedValue = event.target.value;
 
     setSelectedCategory((prevSelectedCategory) => {
-      // If "All" is selected, remove all pairs with the same category
       if (selectedValue === "All") {
         return prevSelectedCategory.filter(
           (item) => item.category !== category
         );
       }
 
-      // Find the index of the existing category in the array
       const index = prevSelectedCategory.findIndex(
         (item) => item.category === category
       );
 
-      // If the category is already in the array, update its value
       if (index !== -1) {
         return prevSelectedCategory.map((item, i) =>
           i === index ? { category, value: selectedValue } : item
         );
       }
 
-      // If the category is not in the array, add it
       return [...prevSelectedCategory, { category, value: selectedValue }];
     });
   };
@@ -55,12 +58,10 @@ const Search_page = () => {
   const filteredhome = (homes, selected, query) => {
     let filteredhomes = homes;
 
-    // Filtering Input Items
     if (query) {
       filteredhomes = filteredItems;
     }
 
-    // Applying selected filter
     const match_selected = (home, selected) => {
       const matchingPairs = [];
       for (const { category, value } of selected) {
@@ -68,25 +69,22 @@ const Search_page = () => {
           return matchingPairs;
         }
         if (category === "Price") {
-          // Parse the value into min and max
           const [min, max] = value.split("-").map(Number);
-          // Check if the home's price is within the range
           if (home[category] > min && home[category] <= max) {
             matchingPairs.push({ [category]: value });
           } else {
-            return []; // If the home's price is not within the range, return an empty array
+            return [];
           }
         } else {
           if (home[category] !== value) {
-            return []; // If a pair doesn't match, return an empty array
+            return [];
           }
           matchingPairs.push({ [category]: value });
         }
       }
-      return matchingPairs; // If all pairs match, return the matching pairs
+      return matchingPairs;
     };
 
-    // Applying selected filter
     if (selected && selected.length > 0) {
       filteredhomes = filteredhomes.filter((home) => {
         const matchingPairs = match_selected(home, selected);
@@ -94,46 +92,42 @@ const Search_page = () => {
       });
     }
 
-    return filteredhomes.map(
-      ({
-        img,
-        Type,
-        Total_Area,
-        Built_in_Area,
-        State,
-        City,
-        Town,
-        Floors,
-        Accommodation,
-        Price,
-        title,
-      }) => (
-        <Card
-          key={Math.random()}
-          img={img}
-          Type={Type}
-          Total_Area={Total_Area}
-          Built_in_Area={Built_in_Area}
-          State={State}
-          City={City}
-          Town={Town}
-          Floors={Floors}
-          Accommodation={Accommodation}
-          Price={Price}
-          title={title}
-        />
-      )
-    );
+    return filteredhomes.map((home) => (
+      <Col
+        key={Math.random()}
+        xs={12}
+        sm={12}
+        md={6}
+        lg={6}
+        xl={4}
+        className="mb-5 mr-5"
+      >
+        <CardComponent {...home} />
+      </Col>
+    ));
   };
 
   const result = filteredhome(homes, selectedCategory, query);
 
   return (
-    <>
-      <Sidebar handleChange={handleChange} />
-      <Navbar query={query} handleInputChange={handleInputChange} />
-      <Products result={result} />
-    </>
+    <Container fluid>
+      <Navbar />
+
+      <div className="body-container">
+        <div className="sidebar-container">
+          <Sidebar handleChange={handleChange} />
+        </div>
+
+        <div className="main-content">
+          <div className="search-container">
+            <Search query={query} handleInputChange={handleInputChange} />
+          </div>
+          <div className="custom-margin">
+            <Row className="mt-3">{result}</Row>
+          </div>
+        </div>
+      </div>
+    </Container>
   );
 };
 

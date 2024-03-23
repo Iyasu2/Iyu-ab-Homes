@@ -4,7 +4,7 @@ import arrow from "../../../assets/dark-arrow.png";
 
 const Hero = () => {
   return (
-    <div className="hero container" id="hero">
+    <div className="hero hero-container" id="hero">
       <div className="hero-text">
         <h1>Find Your Dream Home for Sale or Rent</h1>
         <p>

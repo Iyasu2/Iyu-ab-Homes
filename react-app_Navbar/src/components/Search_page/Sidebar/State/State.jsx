@@ -1,103 +1,65 @@
 import React, { useState } from "react";
-import Input from "../../Input";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./State.css";
+import { Button, Collapse } from "react-bootstrap";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 const State = ({ handleChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedState, setSelectedState] = useState("");
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown); // Toggle dropdown visibility
+    setShowDropdown(!showDropdown);
   };
 
-  const handleRadioChange = (event) => {
-    // Include the component name and event object in the callback
+  const handleStateChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedState(selectedValue);
     handleChange(event, "State");
   };
 
-  return (
-    <div className="Accom-style">
-      <button className="sidebar-title" onClick={toggleDropdown}>
-        State <span className="arrow-down">&#9660;</span>
-      </button>
+  const stateOptions = [
+    { value: "All", title: "All" },
+    { value: "Addis Ababa", title: "Addis Ababa" },
+    { value: "DireDawa", title: "DireDawa" },
+    { value: "Oromia", title: "Oromia" },
+    { value: "Amhara", title: "Amhara" },
+    { value: "Tigray", title: "Tigray" },
+    { value: "Debub", title: "Debub" },
+    { value: "Sidama", title: "Sidama" },
+    { value: "Afar", title: "Afar" },
+    { value: "Somali", title: "Somali" },
+    { value: "Benshangul Gumuz", title: "Benshangul Gumuz" },
+    { value: "Harari", title: "Harari" },
+  ];
 
-      {showDropdown && (
+  return (
+    <div className="Accom-style price-style">
+      <Button
+        className="sidebar-title"
+        onClick={toggleDropdown}
+        variant="primary"
+      >
+        State {showDropdown ? <ExpandLess /> : <ExpandMore />}
+      </Button>
+      <Collapse in={showDropdown}>
         <div className="Accom-list-style">
-          <label className="sidebar-label-container">
-            <input
-              onChange={handleRadioChange}
-              type="radio"
-              value="All"
-              name="test3"
-            />
-            <span className="checkmark"></span>All
-          </label>
-          <Input
-            handleChange={handleRadioChange}
-            value="Addis Ababa"
-            title="Addis Ababa"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="DireDawa"
-            title="DireDawa"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Oromia"
-            title="Oromia"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Amhara"
-            title="Amhara"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Tigray"
-            title="Tigray"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Debub"
-            title="Debub"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Sidama"
-            title="Sidama"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Afar"
-            title="Afar"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Somali"
-            title="Somali"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Benshangul Gumuz"
-            title="Benshangul Gumuz"
-            name="test3"
-          />
-          <Input
-            handleChange={handleRadioChange}
-            value="Harari"
-            title="Harari"
-            name="test3"
-          />
+          {stateOptions.map((option) => (
+            <label key={option.value} className="sidebar-label-container">
+              <input
+                onChange={handleStateChange}
+                type="radio"
+                value={option.value}
+                name="stateOption"
+                checked={selectedState === option.value}
+                className="form-check-input"
+              />
+              <span className="checkmark"></span>
+              {option.title}
+            </label>
+          ))}
         </div>
-      )}
+      </Collapse>
     </div>
   );
 };

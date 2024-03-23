@@ -1,3 +1,4 @@
+import React from "react";
 import Accommodation from "./Accommodation/Accommodation";
 import Price from "./Price/Price";
 import Type from "./Type/Type";
@@ -6,17 +7,25 @@ import State from "./State/State";
 
 const Sidebar = ({ handleChange }) => {
   return (
-    <>
-      <section className="sidebar">
+    <div className="sidebar-container">
+      <div className="sidebar bg-light">
         <div className="logo-container">
-          <h1>Categories</h1>
+          <h1>Filter</h1>
         </div>
-        <Accommodation handleChange={handleChange} />
-        <Price handleChange={handleChange} />
-        <State handleChange={handleChange} />
-        <Type handleChange={handleChange} />
-      </section>
-    </>
+        <div className="mb-3">
+          <Type handleChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <Accommodation handleChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <Price handleChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <State handleChange={handleChange} />
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,6 +1,16 @@
-import program_icon from "../../assets/icon3.png";
+import React from "react";
+import { Card } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBuilding,
+  faMapMarkerAlt,
+  faHome,
+  faBed,
+  faMoneyBillAlt,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 
-const Card = ({
+const CardComponent = ({
   img,
   Type,
   Total_Area,
@@ -12,58 +22,108 @@ const Card = ({
   Accommodation,
   Price,
 }) => {
-  // Function to format price with commas
-  const formatPriceWithCommas = (price) => {
-    const priceStr = price.toString();
-    const [integerPart, decimalPart] = priceStr.split(".");
-    const formattedIntegerPart = integerPart.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ","
-    );
-    const formattedPrice = decimalPart
-      ? `${formattedIntegerPart}.${decimalPart}`
-      : formattedIntegerPart;
-    return formattedPrice;
+  const formatPrice = (price) => {
+    // Format the price with commas, two decimal places, and "Birr"
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "ETB",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    // Format the price and remove the decimal part if it equals .00
+    return formatter.format(price).replace(/\.00$/, "") + " Birr";
   };
 
-  // Format the price
-  const formattedPrice = formatPriceWithCommas(Price);
-
   return (
-    <section className="card">
-      <div className="card-details">
-        <img
-          src="https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg"
-          alt="House"
-        />
-
-        <div className="caption">
-          <img src={program_icon} />
-          <p>See more</p>
-        </div>
-
-        <div className="items-wrapper">
-          <div className="left-items">
-            <ul>
-              <li>City: {City} </li>
-              <li>Town:{Town} </li>
-              <li>State: {State} </li>
-            </ul>
+    <Card className="h-100">
+      <div
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          marginBottom: "10px",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            zIndex: 1,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "rgba(0, 0, 255, 0.8)",
+              padding: "5px 10px",
+              borderRadius: 5,
+              color: "#fff",
+              marginRight: 8,
+              display: "flex",
+              alignItems: "flex-start",
+            }}
+          >
+            <FontAwesomeIcon icon={faBed} style={{ marginRight: 5 }} />
+            <strong>For:</strong> {Accommodation}
           </div>
-          <div className="right-items">
-            <ul>
-              <li>Type: {Type}</li>
-              <li>Floors: {Floors}</li>
-              <li>Accommodation:{Accommodation} </li>
-            </ul>
+          <div
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              padding: "5px 10px",
+              borderRadius: 5,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesomeIcon icon={faEye} style={{ marginRight: 5 }} />
+            <span>1234</span>
           </div>
         </div>
-        <div className="card-price">
-          <div className="price">{formattedPrice} Birr</div>
+        <div
+          style={{
+            paddingBottom: "56%",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <Card.Img
+            variant="top"
+            src={img}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
         </div>
       </div>
-    </section>
+      <Card.Body>
+        <div className="description-area content">
+          <div className="dark-bg"></div>
+          <div className="content">
+            <FontAwesomeIcon icon={faBuilding} /> <strong>Type:</strong>{" "}
+            {Type}
+            <br />
+            <FontAwesomeIcon icon={faHome} /> <strong>Area:</strong>{" "}
+            {Total_Area} / {Built_in_Area}
+            <br />
+            <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+            <strong>Location:</strong> {Town}, {City}, {State}
+            <br />
+            <strong>Floors:</strong> {Floors}
+            <br />
+            <FontAwesomeIcon icon={faMoneyBillAlt} />{" "}
+            <strong>Price:</strong> {formatPrice(Price)}
+          </div>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default Card;
+export default CardComponent;

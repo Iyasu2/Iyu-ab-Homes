@@ -1,4 +1,12 @@
+.nav-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 20px;
+  border: none;
+}
+
 nav {
+  height: 60px;
   width: 100%;
   /* background: #333; */
   color: #fff;
@@ -21,11 +29,17 @@ nav {
 .logo {
   width: 40px;
 }
+
+.nav-container ul {
+  margin-top: 10px; /* Add margin-top for spacing */
+}
+
 nav ul li {
   display: inline-block;
   list-style: none;
-  margin: 5px 20px;
+  margin: 15px 20px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 .dark-nav {
   background: #212ea0;
@@ -34,19 +48,6 @@ nav ul li {
 }
 .menu-icon {
   display: none;
-}
-
-.search-input {
-  padding: 20px 10px;
-  border: none;
-  background: #f7f6f6;
-  outline: none;
-  margin-right: 20px;
-  border-radius: 10px;
-  position: relative;
-  width: 20rem;
-  height: 5px;
-  text-align: center;
 }
 
 .user-add-container {
@@ -59,23 +60,24 @@ nav ul li {
   height: 1.2rem;
   position: absolute;
   top: -10px;
+  color: #fff;
 }
 
 /* -------- media query ---------- */
 
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
   .logo {
-    width: 40px;
+    width: 30px;
   }
   nav ul li {
     margin: 2px 15px;
   }
-  .search-input {
-    width: 15rem;
+  .logo-and-title h1 {
+    font-size: 30px;
   }
 }
 
-@media (max-width: 815px) {
+@media (max-width: 950px) {
   nav {
     padding: 2px 0;
   }
@@ -103,8 +105,10 @@ nav ul li {
   .hide-mobile-menu {
     right: -200px;
   }
-  .search-input {
-    width: 10rem;
-    margin-left: 1px;
+}
+
+@media (max-width: 370px) {
+  .logo-and-title h1 {
+    display: none;
   }
 }

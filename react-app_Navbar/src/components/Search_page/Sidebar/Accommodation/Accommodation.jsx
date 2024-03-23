@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Input from "../../Input";
-import "./Accommodation.css";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "./Accommodation.css"; // Custom styles if needed
+import { Button } from "react-bootstrap"; // Import Bootstrap Button component
+import { Collapse } from "react-bootstrap"; // Import Bootstrap Collapse component
+import { ExpandMore, ExpandLess } from "@mui/icons-material"; // Assuming you're using MUI Icons
 
 const Accommodation = ({ handleChange }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -16,11 +20,15 @@ const Accommodation = ({ handleChange }) => {
 
   return (
     <div className="Accom-style">
-      <button className="sidebar-title" onClick={toggleDropdown}>
-        Accommodation <span className="arrow-down">&#9660;</span>
-      </button>
+      <Button
+        className="sidebar-title"
+        onClick={toggleDropdown}
+        variant="primary"
+      >
+        Accommodation {showDropdown ? <ExpandLess /> : <ExpandMore />}
+      </Button>
 
-      {showDropdown && (
+      <Collapse in={showDropdown}>
         <div className="Accom-list-style">
           <label className="sidebar-label-container">
             <input
@@ -28,6 +36,7 @@ const Accommodation = ({ handleChange }) => {
               type="radio"
               value="All"
               name="test"
+              className="form-check-input"
             />
             <span className="checkmark"></span>All
           </label>
@@ -44,7 +53,7 @@ const Accommodation = ({ handleChange }) => {
             name="test"
           />
         </div>
-      )}
+      </Collapse>
     </div>
   );
 };
