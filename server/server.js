@@ -1,25 +1,23 @@
-// server.js
-const express = require('express');
+require("dotenv").config(); // Load environment variables from .env file
+
+const express = require("express");
+const path = require("path");
 const app = express();
-const postRoutes = require('./routes/postRoutes');
-const userRoutes = require('./routes/userRoutes');
-const jwtMiddleware = require('./middleware/jwtMiddleware'); // JWT authentication middleware
-const cors = require('cors');
+const propertyRoutes = require("./routes/properties");
+const userRoutes = require("./routes/user");
+const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api', postRoutes);
-app.use('/api', userRoutes);
+app.use("/api/properties", propertyRoutes);
+app.use("/api/user", userRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Protected route example
-app.get('/api/post', jwtMiddleware, (req, res) => {
-    // Access user information from req.user
-    res.json({ user: req.user });
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -1,6 +1,6 @@
 // sync.js
 const sequelize = require('./sequelize');
-const House = require('./models/post.model');
+const Property = require('./models/property.model');
 const User = require('./models/user.model');
 
 // Define associations between models here, if any
