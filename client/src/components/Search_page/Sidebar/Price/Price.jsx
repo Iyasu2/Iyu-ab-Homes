@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Collapse } from "react-bootstrap";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
-const Price = ({ handleChange }) => {
+const Price = ({ handleChange, saleSelected, rentSelected }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
@@ -16,21 +16,29 @@ const Price = ({ handleChange }) => {
 
   const priceRanges = [
     { value: "All", title: "All" }, // Add an "All" option
-    { value: "Rent", title: "Rent", isText: true },
     { value: "0-10000", title: "0 - 10,000 Birr" },
     { value: "10000-20000", title: "10 - 20,000 Birr" },
     { value: "20000-30000", title: "20 - 30,000 Birr" },
     { value: "30000-40000", title: "30 - 40,000 Birr" },
     { value: "40000-50000", title: "40 - 50,000 Birr" },
-    { value: "50000-100000", title: "Over 50,000 Birr" },
-    { value: "Sale", title: "Sale", isText: true },
-    { value: "1000000-10000000", title: "1 - 10,000,000 Birr" },
+    { value: "50000-1000000", title: "Over 50,000 Birr" },
+    { value: "0-10000000", title: "Below 10,000,000 Birr" },
     { value: "10000000-20000000", title: "10 - 20,000,000 Birr" },
     { value: "20000000-30000000", title: "20 - 30,000,000 Birr" },
     { value: "30000000-40000000", title: "30 - 40,000,000 Birr" },
     { value: "40000000-50000000", title: "40 - 50,000,000 Birr" },
     { value: "50000000-1000000000", title: "Over 50,000,000 Birr" },
   ];
+
+  // Filter priceRanges based on saleSelected and rentSelected
+  const filteredPriceRanges = priceRanges.filter((range, index) => {
+    if (saleSelected) {
+      return index === 0 || (index >= 7 && index <= 12);
+    } else if (rentSelected) {
+      return index >= 0 && index <= 6;
+    }
+    return true; // If neither sale nor rent is selected, show all
+  });
 
   return (
     <div className="Accom-style">
@@ -44,7 +52,7 @@ const Price = ({ handleChange }) => {
 
       <Collapse in={showDropdown}>
         <div className="Accom-list-style">
-          {priceRanges.map((range) =>
+          {filteredPriceRanges.map((range) =>
             range.isText ? (
               <p key={range.value}>{range.title}</p>
             ) : (

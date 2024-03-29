@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,39 +10,42 @@ import {
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom"; // Import useHistory
+import "./Card.css";
 
 const CardComponent = ({
-  img,
-  Type,
-  Total_Area,
-  Built_in_Area,
-  State,
-  City,
+  images,
+  type,
+  totalArea,
+  builtInArea,
+  state,
+  city,
   Town,
-  Floors,
-  Accommodation,
-  Price,
+  floors,
+  accommodation,
+  price,
 }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate("/details", {
       state: {
-        img,
-        Type,
-        Total_Area,
-        Built_in_Area,
-        State,
-        City,
+        images,
+        type,
+        totalArea,
+        builtInArea,
+        state,
+        city,
         Town,
-        Floors,
-        Accommodation,
-        Price,
+        floors,
+        accommodation,
+        price,
       },
     });
   };
 
-  const formatPrice = (price) => {
+  const [saleSelected, setSaleSelected] = useState(false);
+
+  const formatprice = (price) => {
     // Format the price with commas, two decimal places, and "Birr"
     const formatter = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -56,7 +59,7 @@ const CardComponent = ({
   };
 
   return (
-    <div className="card " onClick={handleCardClick}>
+    <div className="card " /*onClick={handleCardClick}*/>
       <Card className="h-100">
         <div
           style={{
@@ -87,7 +90,7 @@ const CardComponent = ({
               }}
             >
               <FontAwesomeIcon icon={faBed} style={{ marginRight: 5 }} />
-              <strong>For:</strong> {Accommodation}
+              <strong>For:</strong> {accommodation}
             </div>
             <div
               style={{
@@ -111,7 +114,7 @@ const CardComponent = ({
           >
             <Card.Img
               variant="top"
-              src={img}
+              src={images ? images : null}
               style={{
                 position: "absolute",
                 top: 0,
@@ -127,19 +130,19 @@ const CardComponent = ({
           <div className="description-area content">
             <div className="dark-bg"></div>
             <div className="content">
-              <FontAwesomeIcon icon={faBuilding} /> <strong>Type:</strong>{" "}
-              {Type}
+              <FontAwesomeIcon icon={faBuilding} /> <strong>type:</strong>{" "}
+              {type}
               <br />
               <FontAwesomeIcon icon={faHome} /> <strong>Area:</strong>{" "}
-              {Total_Area} / {Built_in_Area}
+              {totalArea} / {builtInArea}
               <br />
               <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-              <strong>Location:</strong> {Town}, {City}, {State}
+              <strong>Location:</strong> {Town}, {city}, {state}
               <br />
-              <strong>Floors:</strong> {Floors}
+              <strong>floors:</strong> {floors}
               <br />
-              <FontAwesomeIcon icon={faMoneyBillAlt} /> <strong>Price:</strong>{" "}
-              {formatPrice(Price)}
+              <FontAwesomeIcon icon={faMoneyBillAlt} /> <strong>price:</strong>{" "}
+              {formatprice(price)}
             </div>
           </div>
         </Card.Body>

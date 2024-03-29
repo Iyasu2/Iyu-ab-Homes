@@ -5,29 +5,18 @@ import {
   faBuilding,
   faMapMarkerAlt,
   faHome,
-  faBed,
+  faTrash,
   faMoneyBillAlt,
-  faEye,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Details = () => {
+  const { user } = useAuthContext();
   const location = useLocation();
-  const { state } = location;
-
-  const {
-    img,
-    Type,
-    Total_Area,
-    Built_in_Area,
-    State,
-    City,
-    Town,
-    Floors,
-    Accommodation,
-    Price,
-  } = state;
+  const navigate = useNavigate();
+  const { property } = location.state;
 
   const formatPrice = (price) => {
     // Format the price with commas, two decimal places, and "Birr"
@@ -42,40 +31,77 @@ const Details = () => {
     return formatter.format(price).replace(/\.00$/, "") + " Birr";
   };
 
+  const handleEdit = () => {
+    // Navigate to the edit page with the property details
+    navigate("/edit-property", { state: { property } });
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/properties/${property.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete property");
+      }
+
+      console.log("Property deleted successfully");
+      navigate("/properties");
+    } catch (error) {
+      console.error("Error deleting property:", error.message);
+      // Optionally, you can display an error message to the user
+    }
+  };
+
   return (
     <>
       <div className="details-container">
         <div className="details">
           <div className="big-img">
-            <img src={img} alt="" />
+            <img src={property.images[0]} alt="" />
           </div>
 
           <div className="box">
             <div className="row">
-              <h2>{Type}</h2>
-              <span>{Accommodation}</span>
+              <h2>{property.type}</h2>
+              <span>{property.accommodation}</span>
             </div>
 
             <div className="description-area content">
               <div className="dark-bg"></div>
               <div className="content">
                 <FontAwesomeIcon icon={faBuilding} /> <strong>Type:</strong>{" "}
-                {Type}
+                {property.type}
                 <br />
                 <FontAwesomeIcon icon={faHome} /> <strong>Area:</strong>{" "}
-                {Total_Area} / {Built_in_Area}
+                {property.totalArea} / {property.builtInArea}
                 <br />
                 <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                <strong>Location:</strong> {Town}, {City}, {State}
+                <strong>Location:</strong> {property.town}, {property.city},{" "}
+                {property.state}
                 <br />
-                <strong>Floors:</strong> {Floors}
+                <strong>Floors:</strong> {property.floors}
                 <br />
                 <FontAwesomeIcon icon={faMoneyBillAlt} />{" "}
-                <strong>Price:</strong> {formatPrice(Price)}
+                <strong>Price:</strong> {formatPrice(property.price)}
               </div>
             </div>
 
-            <button className="cart">Like</button>
+            <div className="buttons">
+              <button className="edit" onClick={handleEdit}>
+                <FontAwesomeIcon icon={faEdit} /> Edit
+              </button>
+              <button className="delete" onClick={handleDelete}>
+                <FontAwesomeIcon icon={faTrash} /> Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>

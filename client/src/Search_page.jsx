@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Search_page/Sidebar/Sidebar";
 import { Container, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBuilding,
-  faMapMarkerAlt,
-  faHome,
-  faBed,
-  faMoneyBillAlt,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
-import homes from "./components/Search_page/db/data";
+import homesData from "./components/Search_page/db/data";
 import CardComponent from "./components/Search_page/Card";
 import "./Search_page.css";
 import Search from "./components/Search_page/Search/Search";
 
-const Search_page = ({ isAuthenticated }) => {
+const Search_page = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [query, setQuery] = useState("");
+  const [homes, setHomes] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/properties/all",
+          {
+            method: "GET",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const homesFromDatabase = await response.json();
+
+        if (homesFromDatabase && homesFromDatabase.length > 0) {
+          const updatedHomes = [...homesData, ...homesFromDatabase];
+          setHomes(updatedHomes);
+        } else {
+          setHomes(homesData);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -26,32 +46,46 @@ const Search_page = ({ isAuthenticated }) => {
 
   const filteredItems = homes.filter(
     (home) =>
-      home.Type.toLowerCase().includes(query.toLowerCase()) ||
-      home.City.toLowerCase().includes(query.toLowerCase()) ||
-      home.State.toLowerCase().includes(query.toLowerCase())
+      home.type.toLowerCase().includes(query.toLowerCase()) ||
+      home.city.toLowerCase().includes(query.toLowerCase()) ||
+      home.state.toLowerCase().includes(query.toLowerCase()) ||
+      home.accommodation.toLowerCase().includes(query.toLowerCase()) ||
+      home.town.toLowerCase().includes(query.toLowerCase()) ||
+      home.price.toString().toLowerCase().includes(query.toLowerCase()) ||
+      home.floors.toLowerCase().includes(query.toLowerCase()) ||
+      home.totalArea.toLowerCase().includes(query.toLowerCase()) ||
+      home.builtInArea.toLowerCase().includes(query.toLowerCase())
   );
 
   const handleChange = (event, category) => {
     const selectedValue = event.target.value;
+    const lowercaseCategory = category.toLowerCase(); // Convert category to lowercase
+    console.log(`Selected ${lowercaseCategory}: ${selectedValue}`);
 
     setSelectedCategory((prevSelectedCategory) => {
       if (selectedValue === "All") {
         return prevSelectedCategory.filter(
-          (item) => item.category !== category
+          (item) => item.category !== lowercaseCategory
         );
       }
 
       const index = prevSelectedCategory.findIndex(
-        (item) => item.category === category
+        (item) => item.category === lowercaseCategory
       );
 
       if (index !== -1) {
-        return prevSelectedCategory.map((item, i) =>
-          i === index ? { category, value: selectedValue } : item
-        );
+        const updatedSelectedCategory = [...prevSelectedCategory];
+        updatedSelectedCategory[index] = {
+          category: lowercaseCategory,
+          value: selectedValue,
+        };
+        return updatedSelectedCategory;
       }
 
-      return [...prevSelectedCategory, { category, value: selectedValue }];
+      return [
+        ...prevSelectedCategory,
+        { category: lowercaseCategory, value: selectedValue },
+      ];
     });
   };
 
@@ -68,7 +102,7 @@ const Search_page = ({ isAuthenticated }) => {
         if (category === "All") {
           return matchingPairs;
         }
-        if (category === "Price") {
+        if (category === "price") {
           const [min, max] = value.split("-").map(Number);
           if (home[category] > min && home[category] <= max) {
             matchingPairs.push({ [category]: value });
@@ -111,7 +145,7 @@ const Search_page = ({ isAuthenticated }) => {
 
   return (
     <Container fluid>
-      <Navbar isAuthenticated={isAuthenticated} />
+      <Navbar />
 
       <div className="body-container">
         <div className="sidebar-container">

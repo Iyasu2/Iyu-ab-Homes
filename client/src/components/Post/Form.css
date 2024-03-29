@@ -1,0 +1,42 @@
+.card-form {
+  
+  border: 2px solid #243f80; /* Add a solid border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  max-width: 400x;
+  min-height: 500px;
+  max-height: 400px;
+  cursor: pointer;
+  border-radius: 15px;
+  position: relative; /* Ensure positioning context for absolute positioning */
+  overflow: hidden; /* Hide overflowing elements */
+}
+.card-form img {
+  min-width: 180px;
+  max-width: 400x;
+  min-height: 500px;
+  max-height: 400px;
+  object-fit: cover; /* Ensure the image covers the entire container */
+}
+
+.card-form .content {
+  position: relative;
+  z-index: 1;
+  color: #000;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  margin-top: 210px;
+  background-color: rgba(32, 93, 198, 0.5);
+  width: 40px;
+  height: 40px;
+}
+.carousel-control-prev {
+  border-radius: 0 5px 5px 0; /* Rounded corners only on the left side */
+}
+
+.carousel-control-next {
+  border-radius: 5px 0 0 5px; /* Rounded corners only on the right side */
+}
+

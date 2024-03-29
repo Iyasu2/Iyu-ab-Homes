@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -20,6 +21,15 @@ const Navbar = ({ isAuthenticated }) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [scrollable, setScrollable] = useState(true);
+  const { logout } = useLogout();
+
+  const handleLogout = () => {
+    logout();
+    // You can optionally redirect the user to the login page after logout
+    window.location.href = "/login";
+  };
+
+  console.log((isAuthenticated = { isAuthenticated }));
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -53,18 +63,14 @@ const Navbar = ({ isAuthenticated }) => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Remove the token from localStorage
-    localStorage.removeItem("token");
-
-    // Navigate to the login page
-    navigate("/login");
+  const handleClick = () => {
+    logout();
   };
 
   return (
     <nav
       className={`nav-container ${
-        location.pathname === "/" ? (sticky ? "dark-nav" : "") : "dark-nav"
+        location.pathname === "/about" ? (sticky ? "dark-nav" : "") : "dark-nav"
       }`}
     >
       <div className="logo-and-title">
@@ -72,7 +78,7 @@ const Navbar = ({ isAuthenticated }) => {
         <h1>Iyu-ab Homes</h1>
       </div>
       <ul className={mobileMenu ? "" : "hide-mobile-menu"}>
-        {location.pathname === "/" && (
+        {location.pathname === "/about" ? (
           <>
             <li>
               <Link to="hero" smooth={true} offset={0} duration={500}>
@@ -80,16 +86,22 @@ const Navbar = ({ isAuthenticated }) => {
               </Link>
             </li>
             <li>
-              <RouteLink to="Search_homes">Find Homes</RouteLink>
+              <RouteLink to="/">Find Homes</RouteLink>
             </li>
             <li>
               <Link to="about" smooth={true} offset={-150} duration={500}>
                 About
               </Link>
             </li>
-            <li>
-              <RouteLink to="/login">Login</RouteLink>
-            </li>
+            {isAuthenticated ? (
+              <li onClick={handleLogout} style={{ cursor: "pointer" }}>
+                Logout
+              </li>
+            ) : (
+              <li>
+                <RouteLink to="/login">Login</RouteLink>
+              </li>
+            )}
             <li>
               <Link
                 to="contact"
@@ -102,115 +114,45 @@ const Navbar = ({ isAuthenticated }) => {
               </Link>
             </li>
           </>
-        )}
-        {location.pathname === "/Search_homes" ||
-          (location.pathname === "/details" && (
-            <>
-              {isAuthenticated ? (
-                <li>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Tooltip title="Open settings">
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <AiOutlineUserAdd size={24} style={{ color: "#fff" }} />
-                      </IconButton>
-                    </Tooltip>
-                    <Menu
-                      sx={{ mt: "45px" }}
-                      id="menu-appbar"
-                      anchorEl={anchorElUser}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      open={Boolean(anchorElUser)}
-                      onClose={handleCloseUserMenu}
-                    >
-                      {settings.map((setting) => (
-                        <MenuItem
-                          key={setting}
-                          onClick={
-                            setting === "Logout"
-                              ? handleLogout
-                              : handleCloseUserMenu
-                          }
-                        >
-                          <Typography textAlign="center">{setting}</Typography>
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </Box>
-                </li>
-              ) : (
-                <li>
-                  <RouteLink to="/login">Login</RouteLink>
-                </li>
-              )}
-
-              <li>
-                <RouteLink to="/post">Post Homes</RouteLink>
-              </li>
-              <li>
-                <RouteLink to="/">About us</RouteLink>
-              </li>
-            </>
-          ))}
-        {location.pathname === "/login" || location.pathname === "/post" ? (
+        ) : (
           <>
-            {location.pathname === "/post" ? (
+            <li>
+              <RouteLink to="/">Home</RouteLink>
+            </li>
+            <li>
+              <RouteLink to="/about">About us</RouteLink>
+            </li>
+            {isAuthenticated ? (
               <>
+                <li onClick={handleLogout} style={{ cursor: "pointer" }}>
+                  Logout
+                </li>
                 <li>
                   <Box sx={{ flexGrow: 1 }}>
                     <Tooltip title="Open settings">
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <AiOutlineUserAdd size={24} style={{ color: "#fff" }} />
-                      </IconButton>
+                      {/* Wrap IconButton with Link */}
+                      <RouteLink
+                        to="/dashboard"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <IconButton sx={{ p: 0 }}>
+                          <AiOutlineUserAdd
+                            size={24}
+                            style={{ color: "#fff" }}
+                          />
+                        </IconButton>
+                      </RouteLink>
                     </Tooltip>
-                    <Menu
-                      sx={{ mt: "45px" }}
-                      id="menu-appbar"
-                      anchorEl={anchorElUser}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      open={Boolean(anchorElUser)}
-                      onClose={handleCloseUserMenu}
-                    >
-                      {settings.map((setting) => (
-                        <MenuItem
-                          key={setting}
-                          onClick={
-                            setting === "Logout"
-                              ? handleLogout
-                              : handleCloseUserMenu
-                          }
-                        >
-                          <Typography textAlign="center">{setting}</Typography>
-                        </MenuItem>
-                      ))}
-                    </Menu>
                   </Box>
                 </li>
               </>
-            ) : null}
-            <li>
-              <RouteLink to="/Search_homes">Home</RouteLink>
-            </li>
-            <li>
-              <RouteLink to="/">About us</RouteLink>
-            </li>
+            ) : (
+              <li>
+                <RouteLink to="/login">Login</RouteLink>
+              </li>
+            )}
           </>
-        ) : null}
+        )}
       </ul>
       <img src={menu_icon} className="menu-icon" onClick={toggleMenu} />
     </nav>

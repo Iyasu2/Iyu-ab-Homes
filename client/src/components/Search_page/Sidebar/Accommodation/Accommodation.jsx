@@ -6,7 +6,13 @@ import { Button } from "react-bootstrap"; // Import Bootstrap Button component
 import { Collapse } from "react-bootstrap"; // Import Bootstrap Collapse component
 import { ExpandMore, ExpandLess } from "@mui/icons-material"; // Assuming you're using MUI Icons
 
-const Accommodation = ({ handleChange }) => {
+const Accommodation = ({
+  handleChange,
+  saleSelected,
+  rentSelected,
+  setSaleSelected,
+  setRentSelected,
+}) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
@@ -16,6 +22,17 @@ const Accommodation = ({ handleChange }) => {
   const handleRadioChange = (event) => {
     // Include the component name and event object in the callback
     handleChange(event, "Accommodation");
+    const selectedValue = event.target.value;
+    if (selectedValue === "Sale") {
+      setSaleSelected(true);
+      setRentSelected(false);
+    } else if (selectedValue === "Rent") {
+      setRentSelected(true);
+      setSaleSelected(false);
+    } else {
+      setSaleSelected(false);
+      setRentSelected(false);
+    }
   };
 
   return (

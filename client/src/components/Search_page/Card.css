@@ -1,5 +1,4 @@
 .card {
-  background-color: rgb(33, 71, 128);
   border: none; /* Remove border */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow for elevation */
   position: relative; /* Ensure positioning context */
@@ -7,6 +6,7 @@
   transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transition box shadow and transform */
   min-width: 180px;
   max-width: 400px;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -61,5 +61,5 @@
 .card .content {
   position: relative;
   z-index: 1;
-  color: #fff; /* White text color */
+  color: #000;
 }

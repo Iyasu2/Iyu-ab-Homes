@@ -7,10 +7,10 @@ import About from "./components/About_us_page/About/About";
 import Contact from "./components/About_us_page/Contact/Contact";
 import Footer from "./components/About_us_page/Footer/Footer";
 
-const About_us_page = () => {
+const About_us_page = ({ isAuthenticated }) => {
   return (
     <div>
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} />
       <Hero />
       <div className="container">
         <Title subTitle="Our Program" title="What we offer" />
