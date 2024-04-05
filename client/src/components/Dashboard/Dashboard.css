@@ -1,0 +1,94 @@
+/* Updated CSS with prefixed classnames */
+.dash-profile-dashboard {
+  display: flex;
+}
+
+.dash-sidebar-dashboard {
+  width: 230px; /* Match the margin-left of .main-content */
+  height: calc(100vh - 120px);
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.dash-sidebar-dashboard ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dash-sidebar-dashboard li {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.dash-sidebar-dashboard li:hover {
+  background-color: #ddd;
+}
+
+.dash-form-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.dash-image-upload-container {
+  width: 300px;
+  padding: 2px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 60px;
+  padding-top: 15px;
+}
+
+.dash-profile-form {
+  flex: 1;
+  padding: 20px;
+}
+
+.dash-profile-form h2 {
+  margin-top: 0;
+}
+
+.dash-profile-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.dash-profile-form input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dash-profile-form button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dash-profile-form button:hover {
+  background-color: #45a049;
+}
+
+/* Styling for image upload */
+.dash-image-upload-container label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.dash-image-upload-container input[type="file"] {
+  margin-bottom: 2px;
+}
+
+.dash-image-upload-preview {
+  width: 250px;
+  height: 200px;
+  margin-top: 0;
+}

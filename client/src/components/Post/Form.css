@@ -1,0 +1,50 @@
+.card-form {
+  border: 2px solid #243f80;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  cursor: pointer;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  display: flex; /* Add flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+.card-form .placeholder-image {
+  display: block; /* Ensure the image behaves as a block element */
+  margin: auto; /* Center the image horizontally */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.card-form img {
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  color: #000;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  margin-top: 210px;
+  background-color: rgba(32, 93, 198, 0.5);
+  width: 40px;
+  height: 40px;
+}
+
+.carousel-control-prev {
+  border-radius: 0 5px 5px 0;
+}
+
+.carousel-control-next {
+  border-radius: 5px 0 0 5px;
+}

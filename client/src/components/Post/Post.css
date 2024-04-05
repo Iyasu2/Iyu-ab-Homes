@@ -1,0 +1,21 @@
+.property-form-container {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.property-form-container h3 {
+  margin-bottom: 30px;
+}
+
+.property-form-container .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.property-form-container .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}

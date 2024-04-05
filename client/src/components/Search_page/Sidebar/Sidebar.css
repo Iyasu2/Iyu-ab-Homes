@@ -1,0 +1,15 @@
+
+  
+  
+  .sidebar {
+    /* background-color: white; */
+    border-radius: 8px;
+    padding: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+  .sidebar:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.015);
+    z-index: 2;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }  

@@ -1,0 +1,11 @@
+.semi-title {
+  padding-bottom: 10px;
+}
+
+/* -------- media query ---------- */
+
+@media (max-width: 800px) {
+  .semi-title {
+    font-size: 13px;
+  }
+}
