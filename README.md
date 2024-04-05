@@ -7,21 +7,30 @@ To run locally, follow these straightforward steps:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/Iyasu2/Electronic-Government-Service.git
-    cd Electronic-Government-Service
+    git clone https://github.com/Iyasu2/Iyu-ab-Homes.git
+    cd Iyu-ab-Homes
     ```
 
-2. **Install dependencies:**
+2. **Go into client:**
     ```bash
-    pip install -r requirements.txt
+    cd client
     ```
 
-3. **Run the application:**
+3. **Go into server:**
     ```bash
-    python main.py
+    cd server
     ```
 
-4. Open your web browser and go to [http://localhost:5000](http://localhost:5000) to access the landing page.
+4. **Install the application on both:**
+    ```bash
+    npm i
+    ```
+5. **Run the application on both:**
+    ```bash
+    npm run dev
+    ```
+
+4. Open your web browser and go to [http://localhost:5173/] to access the landing page.
 
 ## Features
 
@@ -39,10 +48,6 @@ To run locally, follow these straightforward steps:
 
 - **Edit and Delete:**
   Users have the flexibility to edit or delete their submissions if applications are not yet approved.
-
-- **Admin Panel:**
-  An intuitive admin side is implemented to review and manage client applications.
-  Admins can efficiently approve or deny applications after conducting necessary checks.
 
 ## Contributing
 
