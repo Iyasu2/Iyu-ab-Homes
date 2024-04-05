@@ -1,10 +1,9 @@
 # Iyu-ab-Homes
 
-EGOV is a sophisticated web application leveraging the Flask framework to revolutionize government services. This project is committed to transitioning traditionally in-person services, such as applying for a driver's license, birth certificate, and national ID, into a seamless online platform. With EGOV, users can effortlessly sign up, log in, and apply for essential services from the convenience of their homes.
-
+Welcome!! Here you'll discover a curated collection of exceptional homes available for sale or rent. Whether you're searching for your forever home, a cozy rental, or an investment property, we've got you covered.
 ## Getting Started
 
-To run EGOV locally, follow these straightforward steps:
+To run locally, follow these straightforward steps:
 
 1. **Clone the repository:**
     ```bash
