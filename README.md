@@ -1,4 +1,4 @@
-# Iyu-ab-Homes
+# Iyu-ab-Homes/GOJO
 
 Welcome!! Here you'll discover a curated collection of exceptional homes available for sale or rent. Whether you're searching for your forever home, a cozy rental, or an investment property, we've got you covered.
 ## Getting Started
@@ -35,26 +35,20 @@ To run locally, follow these straightforward steps:
 ## Features
 
 - **Landing Page:**
-  The landing page provides an elegant overview of the government services available through EGOV.
+  The landing page provides a collection of homes provided by users of our websites. Here you can search and filter homes to find what you are looking for.
 
 - **User Authentication:**
   Secure sign-up and login functionalities enable users to access personalized features.
 
 - **Service Application:**
-  Users can effortlessly apply for a driver's license, birth certificate, and national ID by filling out the respective forms.
-
-- **Application Status:**
-  Track the status of your application forms, initially displayed as "Pending."
-
-- **Edit and Delete:**
-  Users have the flexibility to edit or delete their submissions if applications are not yet approved.
+  Users can effortlessly post homes they want to sell or rent. They can edit or delete their posts.
 
 ## Contributing
 
-We warmly welcome contributions to enhance and extend the functionality of EGOV. Feel free to submit issues, feature requests, or pull requests.
+We warmly welcome contributions to enhance and extend the functionality of GOJO. Feel free to submit issues, feature requests, or pull requests.
 
 ## Contact
 
 For any inquiries or support, please contact [abell.demere@gmail.com](mailto:abell.demere@gmail.com).
 
-Thank you for choosing EGOV! We trust it will simplify and elevate your experience with government services.
+Thank you for choosing GOJO! We trust it will simplify and elevate your experience.
