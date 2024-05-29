@@ -1,0 +1,61 @@
+/* Custom CSS for Type Component */
+.type-container {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+.options-container {
+ 
+  /* display: flex; */
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option-label {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  /* border: 2px solid #ccc; */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.option-label:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #007bff5f;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.option-label input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #224f8057;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-radio-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #0404044a;
+  display: none;
+}
+
+.option-label input[type="radio"]:checked + .custom-radio .custom-radio-dot {
+  display: block;
+}

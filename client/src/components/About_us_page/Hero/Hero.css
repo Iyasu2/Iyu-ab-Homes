@@ -1,0 +1,86 @@
+.hero-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 20px;
+  border: none;
+}
+
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url("../../../assets/Hero_1.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-text {
+  max-width: 800px;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.hero-text p {
+  max-width: 700px;
+  margin: 10px auto 20px;
+  line-height: 1.4;
+}
+
+.input-wrapper {
+  background-color: white;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 10px;
+  height: 2.5rem;
+  padding: 0 15px;
+  box-shadow: 0px 0px 8px #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20px auto;
+}
+
+input {
+  background-color: transparent;
+  height: 100%;
+  border: none;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-left: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+#search-icon {
+  color: royalblue;
+}
+
+/* -------- media query ---------- */
+
+@media (max-width: 815px) {
+  .hero-text h1 {
+    font-size: 40px;
+  }
+}
+@media (max-width: 615px) {
+  .hero-text h1 {
+    font-size: 30px;
+    max-width: 400px;
+    margin: auto;
+  }
+  .hero-text p {
+    font-size: 14px;
+    margin: 15px auto 30px;
+  }
+}

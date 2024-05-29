@@ -1,0 +1,44 @@
+.body-container_dash {
+  margin: auto;
+  max-width: 1600px;
+  min-width: 600px;
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  padding-top: 106px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.dash {
+  width: 280px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* .restofpage_container {
+  width: 100%;
+  
+  
+  align-items: center;
+} */
+.restofpage_container {
+  flex: 1;
+  padding: 20px;
+}
+
+@media (max-width: 800px) {
+  .body-container_dash {
+    flex-direction: column; /* Change flex direction to stack elements vertically */
+    padding-top: 100px;
+  }
+
+  .dash {
+    width: calc(100% - 30px);
+    margin-bottom: 2px; /* Add margin at the bottom to create space between dash and restofpage_container */
+  }
+
+  .restofpage_container {
+    max-width: 100%; /* Occupy full width */
+  }
+}
