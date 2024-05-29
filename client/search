@@ -1,7 +1,0 @@
-import { FaSearch } from "react-icons/fa";
-import Homes from "../Homes/Homes";
-
-<div className="input-wrapper">
-  <FaSearch id="search-icon" />
-  <input placeholder="Type to search..." />
-</div>;
