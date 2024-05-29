@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import authImage from '../../assets/signup-image.jpg';

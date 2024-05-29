@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ProperyForm from "../Post/PropertyForm";
+import Navbar from "../Navbar/Navbar";
+import PropertyForm from "./PropertyForm";
 
 const EditProperty = () => {
   const navigate = useNavigate();
@@ -9,8 +10,8 @@ const EditProperty = () => {
 
   return (
     <div>
-      <h1>Edit Property</h1>
-      <ProperyForm property={property} />
+      <Navbar />
+      <PropertyForm property={property} />
     </div>
   );
 };

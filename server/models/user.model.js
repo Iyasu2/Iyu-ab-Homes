@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../sequelize");
 const bcrypt = require("bcrypt");
+const Property = require("./property.model");
+const LikedProperty = require("./likedProperty.model");
 
 const User = sequelize.define("user", {
   id: {
@@ -46,6 +48,14 @@ const User = sequelize.define("user", {
     allowNull: true,
   },
 });
+
+User.associate = function (models) {
+  User.belongsToMany(models.Property, {
+    through: LikedProperty,
+    as: "LikedProperties",
+    foreignKey: "userId",
+  });
+};
 
 const validator = require("validator");
 

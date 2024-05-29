@@ -1,6 +1,12 @@
 // property controller.js
 const Property = require("../models/property.model");
 
+const User = require("../models/user.model");
+
+const LikedProperty = require("../models/likedProperty.model");
+
+const jwt = require("jsonwebtoken");
+
 // get all properties
 const getProperties = async (req, res) => {
   const userId = req.user.id;
@@ -119,6 +125,7 @@ const createProperty = async (req, res) => {
   try {
     const userId = req.user.id;
     const images = req.files?.images?.map((file) => file.path) || []; // Get all uploaded image paths
+    console.log("images: ", images);
 
     const property = await Property.create({
       id,
@@ -162,32 +169,54 @@ const deleteProperty = async (req, res) => {
 const updateProperty = async (req, res) => {
   const { id } = req.params;
 
+  const {
+    type,
+    totalArea,
+    builtInArea,
+    state,
+    city,
+    town,
+    floors,
+    bedrooms,
+    bathrooms,
+    price,
+    accommodation,
+  } = req.body;
+
+  // Validate required fields
+  const emptyFields = [];
+  if (!type) emptyFields.push("type");
+  if (!totalArea) emptyFields.push("totalArea");
+  if (!builtInArea) emptyFields.push("builtInArea");
+  if (!state) emptyFields.push("state");
+  if (!city) emptyFields.push("city");
+  if (!town) emptyFields.push("town");
+  if (!floors) emptyFields.push("floors");
+  if (!bedrooms) emptyFields.push("bedrooms");
+  if (!bathrooms) emptyFields.push("bathrooms");
+  if (!price) emptyFields.push("price");
+  if (!accommodation) emptyFields.push("accommodation");
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
   try {
+    const images = req.files?.images?.map((file) => file.path) || [];
+
     const property = await Property.findByPk(id);
     if (!property) {
       return res.status(404).json({ error: "No such property" });
     }
 
-    const {
-      type,
-      totalArea,
-      builtInArea,
-      state,
-      city,
-      town,
-      floors,
-      bedrooms,
-      bathrooms,
-      accommodation,
-      price,
-    } = req.body;
+    // Check if images field is present and is an array
+    if (images && !Array.isArray(images)) {
+      return res.status(400).json({ error: "Images must be an array" });
+    }
 
-    // Extract images from req.files
-    const images =
-      req.files?.images?.map((file) => file.path) || property.images;
-
+    // Update only the fields present in req.body
     await property.update({
-      id,
       type,
       totalArea,
       builtInArea,
@@ -197,11 +226,10 @@ const updateProperty = async (req, res) => {
       floors,
       bedrooms,
       bathrooms,
-      accommodation,
       price,
-      images, // Include images in the update
+      accommodation,
+      images,
     });
-
     res.status(200).json(property);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -233,25 +261,64 @@ const incrementPropertyViews = async (req, res) => {
 const updatePropertyLikeStatus = async (req, res) => {
   const { id } = req.params;
   const { liked } = req.body;
+  const token = req.header("Authorization").replace("Bearer ", "");
+  console.log("id", id);
 
   try {
-    const property = await Property.findOne({ where: { id } });
-
+    const property = await Property.findByPk(id);
+    console.log("total Area ", property.totalArea);
     if (!property) {
       return res.status(404).json({ error: "Property not found" });
     }
 
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    const userId = decoded.id;
+    console.log("userId: ", userId);
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if the liked status is a boolean value
     if (typeof liked !== "boolean") {
       return res
         .status(400)
         .json({ error: "Liked status must be a boolean value" });
     }
 
-    // Update liked status
-    property.liked = liked;
+    // Find the association between the user and the property
+    const likedProperty = await LikedProperty.findOne({
+      where: { userId, propertyId: id },
+    });
 
-    // Save the updated property to the database
-    await property.save();
+    if (liked) {
+      // If liked is true, create a new association
+      if (!likedProperty) {
+        console.log("Liked");
+        await LikedProperty.create({ userId, propertyId: id });
+
+        await property.update({ likedBy: [...property.likedBy, userId] });
+      }
+    } else {
+      // If liked is false, remove the association if it exists
+      if (likedProperty) {
+        console.log("Disliked");
+        await likedProperty.destroy();
+
+        await property.update({
+          likedBy: property.likedBy.filter(
+            (likedUserId) => likedUserId !== userId
+          ),
+        });
+      }
+    }
+
+    // Update the liked status in the User model
+    await user.update({ liked: liked });
+
+    console.log("property in backend ", property.likedBy);
 
     res.status(200).json({ message: "Liked status updated successfully" });
   } catch (error) {
@@ -262,6 +329,7 @@ const updatePropertyLikeStatus = async (req, res) => {
 // Get liked status of a property
 const getPropertyLikedStatus = async (req, res) => {
   const { id } = req.params;
+  const token = req.header("Authorization").replace("Bearer ", "");
 
   try {
     const property = await Property.findOne({ where: { id } });
@@ -270,8 +338,16 @@ const getPropertyLikedStatus = async (req, res) => {
       return res.status(404).json({ error: "Property not found" });
     }
 
+    const decoded = jwt.verify(token, process.env.SECRET);
+    const userId = decoded.id;
+
+    // Check if the user has liked the property
+    const likedByUser = property.likedBy.includes(userId);
+
+    console.log("likedbyuser ", likedByUser);
+
     // Return the liked status of the property
-    res.status(200).json({ liked: property.liked });
+    res.status(200).json({ liked: likedByUser });
   } catch (error) {
     console.error("Error fetching liked status:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -285,46 +361,12 @@ const getPublicProperties = async (req, res) => {
     if (!properties || properties.length === 0) {
       return res.status(404).json({ error: "Properties not found" });
     }
-    // Format property data for public display (e.g., excluding sensitive information)
-    const formattedProperties = properties.map((property) => {
-      const {
-        id,
-        userId,
-        type,
-        totalArea,
-        builtInArea,
-        state,
-        city,
-        town,
-        floors,
-        bedrooms,
-        bathrooms,
-        accommodation,
-        price,
-        images,
-        views,
-      } = property;
-      const imagePath =
-        images.length > 0 ? `http://localhost:5000/${images[0]}` : null;
-      return {
-        id,
-        userId,
-        type,
-        totalArea,
-        builtInArea,
-        state,
-        city,
-        town,
-        floors,
-        bedrooms,
-        bathrooms,
-        accommodation,
-        price,
-        images: imagePath,
-        views,
-      };
-    });
-    res.status(200).json(formattedProperties);
+    // Map properties to include image URLs
+    const propertiesWithImages = properties.map((property) => ({
+      ...property.toJSON(),
+      images: property.images.map((image) => `http://localhost:5000/${image}`), // Assuming images are stored in the server and served at this URL
+    }));
+    res.status(200).json(propertiesWithImages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

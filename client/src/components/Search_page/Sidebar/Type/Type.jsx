@@ -1,42 +1,88 @@
-// Type.jsx
-import React from "react";
-import Input from "../../Input";
+import React, { useState } from "react";
+import "./Type.css";
 
-const Type = ({ handleChange, isOpen }) => {
-  const handleRadioChange = (event) => {
-    handleChange(event, "Type");
+const Type = ({ handleChange }) => {
+  const [selectedOption, setSelectedOption] = useState("All");
+
+  const handleSelection = (value) => {
+    setSelectedOption(value);
+    handleChange({ target: { value } }, "Type");
   };
 
   return (
-    <div style={{ display: isOpen ? "block" : "none" }}>
-      <label className="sidebar-label-container">
-        <input
-          onChange={handleRadioChange}
-          type="radio"
-          value="All"
-          name="test4"
-          className="form-check-input"
-        />
-        <span className="checkmark"></span>All
-      </label>
-      <Input
-        handleChange={handleRadioChange}
-        value="Apartment"
-        title="Apartment"
-        name="test4"
-      />
-      <Input
-        handleChange={handleRadioChange}
-        value="Condominium"
-        title="Condominium"
-        name="test4"
-      />
-      <Input
-        handleChange={handleRadioChange}
-        value="Personal home"
-        title="Personal home"
-        name="test4"
-      />
+    <div className="type-container">
+      {/* Radio Options */}
+      <div className="options-container">
+        <label
+          className={`option-label ${
+            selectedOption === "All" ? "selected" : ""
+          }`}
+          onClick={() => handleSelection("All")}
+        >
+          <input
+            type="radio"
+            value="All"
+            checked={selectedOption === "All"}
+            onChange={() => {}}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          All
+        </label>
+        {/* Add more options similarly */}
+        <label
+          className={`option-label ${
+            selectedOption === "Apartment" ? "selected" : ""
+          }`}
+          onClick={() => handleSelection("Apartment")}
+        >
+          <input
+            type="radio"
+            value="Apartment"
+            checked={selectedOption === "Apartment"}
+            onChange={() => {}}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          Apartment
+        </label>
+        <label
+          className={`option-label ${
+            selectedOption === "Condominium" ? "selected" : ""
+          }`}
+          onClick={() => handleSelection("Condominium")}
+        >
+          <input
+            type="radio"
+            value="Condominium"
+            checked={selectedOption === "Condominium"}
+            onChange={() => {}}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          Condominium
+        </label>
+        <label
+          className={`option-label ${
+            selectedOption === "Personal home" ? "selected" : ""
+          }`}
+          onClick={() => handleSelection("Personal home")}
+        >
+          <input
+            type="radio"
+            value="Personal home"
+            checked={selectedOption === "Personal home"}
+            onChange={() => {}}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          Private Home
+        </label>
+      </div>
     </div>
   );
 };

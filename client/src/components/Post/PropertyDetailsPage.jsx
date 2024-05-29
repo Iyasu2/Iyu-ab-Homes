@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProfileInformation from "../Dashboard/ProfileInformation";
-import "../Dashboard/ProfileInformation.css"; // Import the CSS file
 import placeholderImage from "../../assets/placeholder-image.png"; // Import placeholder image
 
 const PropertyDetailsPage = () => {

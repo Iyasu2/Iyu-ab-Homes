@@ -1,9 +1,5 @@
 import React from "react";
-import Input from "../../Input";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./Accommodation.css";
-import { Button } from "react-bootstrap";
-import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 const Accommodation = ({
   handleChange,
@@ -11,12 +7,10 @@ const Accommodation = ({
   rentSelected,
   setSaleSelected,
   setRentSelected,
-  isOpen,
 }) => {
   const handleRadioChange = (event) => {
     const selectedValue = event.target.value;
     handleChange(event, "Accommodation");
-
     if (selectedValue === "Sale") {
       setSaleSelected(true);
       setRentSelected(false);
@@ -24,36 +18,66 @@ const Accommodation = ({
       setRentSelected(true);
       setSaleSelected(false);
     } else {
+      // "All" selected
       setSaleSelected(false);
       setRentSelected(false);
     }
   };
 
   return (
-    <div className="Accom-style" style={{ display: isOpen ? "block" : "none" }}>
-      <div className="Accom-list-style">
-        <label className="sidebar-label-container">
+    <div className="type-container">
+      <div className="options-container">
+        <label
+          className={`option-label ${!saleSelected && !rentSelected ? "selected" : ""}`}
+          onClick={() => handleRadioChange({ target: { value: "All" } })}
+        >
           <input
-            onChange={handleRadioChange}
             type="radio"
             value="All"
-            name="test"
+            name="accommodation"
             className="form-check-input"
+            checked={!saleSelected && !rentSelected}
+            onChange={handleRadioChange}
           />
-          <span className="checkmark"></span>All
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          All
         </label>
-        <Input
-          handleChange={handleRadioChange}
-          value="Sale"
-          title="Sale"
-          name="test"
-        />
-        <Input
-          handleChange={handleRadioChange}
-          value="Rent"
-          title="Rent"
-          name="test"
-        />
+        <label
+          className={`option-label ${saleSelected ? "selected" : ""}`}
+          onClick={() => handleRadioChange({ target: { value: "Sale" } })}
+        >
+          <input
+            type="radio"
+            value="Sale"
+            name="accommodation"
+            className="form-check-input"
+            checked={saleSelected}
+            onChange={handleRadioChange}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          Sale
+        </label>
+        <label
+          className={`option-label ${rentSelected ? "selected" : ""}`}
+          onClick={() => handleRadioChange({ target: { value: "Rent" } })}
+        >
+          <input
+            type="radio"
+            value="Rent"
+            name="accommodation"
+            className="form-check-input"
+            checked={rentSelected}
+            onChange={handleRadioChange}
+          />
+          <div className="custom-radio">
+            <div className="custom-radio-dot"></div>
+          </div>
+          Rent
+        </label>
       </div>
     </div>
   );

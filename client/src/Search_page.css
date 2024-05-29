@@ -1,4 +1,3 @@
-/* Searchpage.css */
 .body-container {
   margin: auto;
   max-width: 1600px;
@@ -6,24 +5,29 @@
   position: relative;
   display: flex;
   min-height: 100vh;
-  padding-top: 60px;
+  padding-top: 100px;
   box-sizing: border-box;
+  overflow: hidden; /* Hide any overflow from the body container */
 }
 
 .sidebar-container {
+  position: fixed; /* Position the sidebar absolutely */
   width: 280px;
-  height: calc(100vh - 60px);
-  position: absolute;
-  top: 60px;
-  left: 0;
   padding: 15px;
   box-sizing: border-box;
+  z-index: 1000; /* Ensure sidebar appears above main content */
+  transition: transform 0.3s ease; /* Add a transition for smooth animation */
 }
 
 .main-content {
   padding: 15px;
   flex: 1;
-  margin-left: 280px; /* Added for larger screens */
+  overflow-y: auto; /* Enable vertical scrolling if main content exceeds height */
+  transition: margin-left 0.3s ease; /* Add a transition for smooth animation */
+}
+
+.show-sidebar .main-content {
+  margin-left: 280px; /* Adjust this value to match the sidebar's width */
 }
 
 .logo-container {
@@ -60,7 +64,45 @@ h1 {
     margin-left: 0;
   }
 
-  .sidebar-container {
-    display: none; /* Hide the sidebar on small screens */
+  /* Style for toggle button */
+  .sidebar-toggle-button {
+    display: block;
+    position: fixed;
+    top: 130px;
+    left: 0px;
+    z-index: 1000;
+    padding-left: 2px;
+    padding-right: 7px;
+    background-color: white;
+    border: 1px solid #ccc; /* Add a solid border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-top-right-radius: 15px; /* Radius only on the top-right corner */
+    border-bottom-right-radius: 15px; /* Radius only on the bottom-right corner */
+    cursor: pointer;
+  }
+
+  .sidebar-toggle-button::before {
+    content: attr(
+      data-tooltip
+    ); /* Display the content from data-tooltip attribute */
+    position: absolute;
+    top: -23px; /* Position the tooltip above the button */
+    left: 50%; /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: transparent; /* Tooltip background color */
+    color: black; /* Tooltip text color */
+    padding: 5px 5px; /* Padding around the tooltip text */
+    border-radius: 5px; /* Rounded corners for the tooltip */
+    font-size: 12px; /* Tooltip text size */
+    opacity: 0; /* Initially hide the tooltip */
+    transition: opacity 0.3s ease; /* Add transition for smooth appearance */
+  }
+
+  .sidebar-toggle-button:hover::before {
+    opacity: 1; /* Show the tooltip when hovering over the button */
+  }
+
+  .sidebar-toggle-button:focus {
+    outline: none; /* Remove focus outline */
   }
 }

@@ -1,15 +1,50 @@
+/* Sidebar Component CSS */
 
+.sidebar {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100vh - 130px);
+  /* background-color: #f8f9fa; */
+  /* border: 1px solid #e9ecef; */
+  border-radius: 8px;
+  padding: 10px;
+}
+/* .accordion-header {
   
-  
-  .sidebar {
-    /* background-color: white; */
-    border-radius: 8px;
-    padding: 10px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  .sidebar:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: scale(1.015);
-    z-index: 2;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }  
+   overflow: "hidden",
+    margin: "5px",
+    color: "#fff",
+   
+    borderRadius: "8px",
+}
+
+/* .sidebar:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.015);
+  z-index: 2;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+} */
+
+/* Custom CSS to change background of Accordion Item */
+.accordion-item {
+  overflow: hidden;
+  border-radius: 15px !important; /* Add border radius for rounded corners */
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+/* .accordion-item:hover {
+  background-color: #b3cde46e;
+ 
+} */
+
+.accordion {
+  border-radius: 15; /* Add border radius for rounded corners */
+  display: hidden;
+  overflow: hidden;
+}
+
+/* Styling for Accordion Item content when expanded */
+.accordion-item .accordion-body {
+  /* background-color: #ffffff;  */
+  padding: 15px; /* Adjust padding inside the Accordion Body */
+  border-bottom-left-radius: 8px; /* Rounded corners on the bottom left */
+  border-bottom-right-radius: 8px; /* Rounded corners on the bottom right */
+}

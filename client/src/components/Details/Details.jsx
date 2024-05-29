@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Details.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +17,7 @@ const Details = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { property } = location.state;
+  const [index, setIndex] = useState(0);
 
   const formatPrice = (price) => {
     // Format the price with commas, two decimal places, and "Birr"
@@ -53,11 +54,15 @@ const Details = () => {
       }
 
       console.log("Property deleted successfully");
-      navigate("/properties");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error deleting property:", error.message);
       // Optionally, you can display an error message to the user
     }
+  };
+
+  const handleTab = (index) => {
+    setIndex(index);
   };
 
   return (
@@ -65,10 +70,20 @@ const Details = () => {
       <div className="details-container">
         <div className="details">
           <div className="big-img">
-            <img src={property.images[0]} alt="" />
+            <img src={property.images[index]} alt="" />
           </div>
 
           <div className="box">
+            <div className="thumb">
+              {property.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Image ${index}`}
+                  onClick={() => handleTab(index)}
+                />
+              ))}
+            </div>
             <div className="row">
               <h2>{property.type}</h2>
               <span>{property.accommodation}</span>

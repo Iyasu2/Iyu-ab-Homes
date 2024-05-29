@@ -13,7 +13,7 @@ const About_us_page = ({ isAuthenticated }) => {
       <Navbar isAuthenticated={isAuthenticated} />
       <Hero />
       <div className="container">
-        <Title subTitle="Our Program" title="What we offer" />
+        <Title subTitle="Our Homes" title="What we offer" />
         <Homes />
         <About />
         <Title subTitle="Contact Us" title="Get in Touch" />

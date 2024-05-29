@@ -27,9 +27,18 @@ const ProfileInformation = () => {
 
         if (response.ok) {
           const userData = await response.json();
-          setUserData(userData);
-          if (userData.profileImage) {
-            setImagePreview(userData.profileImage);
+          if (userData) {
+            // Filter out properties with null values
+            const filteredUserData = {};
+            for (const key in userData) {
+              if (userData[key] !== null) {
+                filteredUserData[key] = userData[key];
+              }
+            }
+            setUserData(filteredUserData);
+            if (userData.profileImage) {
+              setImagePreview(userData.profileImage);
+            }
           }
         } else {
           const errorData = await response.json();
@@ -112,107 +121,99 @@ const ProfileInformation = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="profile-info-form">
-            <h2>Profile Information</h2>
-            <div className="profile-info-row">
-              <div className="profile-image-container">
-                <div className="profile-image-placeholder">
-                  <img
-                    src={imagePreview}
-                    alt="Profile"
-                    className="profile-image-preview"
-                  />
-                  <input
-                    type="file"
-                    id="profileImage"
-                    name="profileImage"
-                    onChange={handleImageChange}
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => document.getElementById('profileImage').click()}
-                  className="btn btn-secondary mt-2 border shadow-sm"
-                >
-                  Upload Image
-                </button>
-              </div>
-              <div className="profile-inputs">
-                <div className="form-row">
-                  <label htmlFor="fullName">Full Name:</label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    value={userData.fullName}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-row">
-                  <label htmlFor="phoneNumber">Phone Number:</label>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={userData.phoneNumber}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="form-row">
-              <label htmlFor="telegram">Telegram:</label>
-              <input
-                type="text"
-                id="telegram"
-                name="telegram"
-                value={userData.telegram}
-                onChange={handleInputChange}
-                className="form-control"
-              />
-            </div>
-            <div className="form-row">
-              <label htmlFor="facebook">Facebook:</label>
-              <input
-                type="text"
-                id="facebook"
-                name="facebook"
-                value={userData.facebook}
-                onChange={handleInputChange}
-                className="form-control"
-              />
-            </div>
-            <div className="form-row">
-              <label htmlFor="whatsapp">Whatsapp:</label>
-              <input
-                type="text"
-                id="whatsapp"
-                name="whatsapp"
-                value={userData.whatsapp}
-                onChange={handleInputChange}
-                className="form-control"
-              />
-            </div>
-            <div className="form-row">
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className="btn btn-primary shadow-sm"
-              >
-                Save Changes
-              </button>
-            </div>
+    <div className="profile-info-form">
+      <h2>Profile Information</h2>
+      <div className="profile-info-row">
+        <div className="profile-image-container">
+          <div className="profile-image-placeholder">
+            <img
+              src={imagePreview}
+              alt="Profile"
+              className="profile-image-preview"
+            />
+            <input
+              type="file"
+              id="profileImage"
+              name="profileImage"
+              onChange={handleImageChange}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={() => document.getElementById("profileImage").click()}
+            className="btn btn-secondary mt-2 border shadow-sm"
+          >
+            Upload Image
+          </button>
+        </div>
+        <div className="profile-inputs">
+          <div className="form-row">
+            <label htmlFor="fullName">Full Name:</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              value={userData.fullName !== null ? userData.fullName : ""}
+              onChange={handleInputChange}
+              className="form-control"
+            />
+          </div>
+          <div className="form-row">
+            <label htmlFor="phoneNumber">Phone Number:</label>
+            <input
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              value={userData.phoneNumber !== null ? userData.phoneNumber : ""}
+              onChange={handleInputChange}
+              className="form-control"
+            />
           </div>
         </div>
       </div>
+      <div className="form-row">
+        <label htmlFor="telegram">Telegram:</label>
+        <input
+          type="text"
+          id="telegram"
+          name="telegram"
+          value={userData.telegram !== null ? userData.telegram : ""}
+          onChange={handleInputChange}
+          className="form-control"
+        />
+      </div>
+      <div className="form-row">
+        <label htmlFor="facebook">Facebook:</label>
+        <input
+          type="text"
+          id="facebook"
+          name="facebook"
+          value={userData.facebook !== null ? userData.facebook : ""}
+          onChange={handleInputChange}
+          className="form-control"
+        />
+      </div>
+      <div className="form-row">
+        <label htmlFor="whatsapp">Whatsapp:</label>
+        <input
+          type="text"
+          id="whatsapp"
+          name="whatsapp"
+          value={userData.whatsapp !== null ? userData.whatsapp : ""}
+          onChange={handleInputChange}
+          className="form-control"
+        />
+      </div>
+      <div className="form-row">
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="btn btn-primary shadow-sm"
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
-
-
   );
 };
 

@@ -27,10 +27,18 @@ router.use(requireAuth);
 // Authenticated user routes
 router.get("/all", getProperties);
 router.get("/:id", getProperty);
-router.post("/", upload.fields([{ name: "images", maxCount: 3 }]), createProperty);
+router.post(
+  "/",
+  upload.fields([{ name: "images", maxCount: 3 }]),
+  createProperty
+);
 router.delete("/:id", deleteProperty);
-router.patch("/:id", upload.fields([{ name: "images", maxCount: 3 }]), updateProperty);
+router.patch(
+  "/:id",
+  upload.fields([{ name: "images", maxCount: 3 }]),
+  updateProperty
+);
 router.put("/:id/like", updatePropertyLikeStatus);
-router.get("/:id/like", getPropertyLikedStatus);
+router.get("/:id/like_status", getPropertyLikedStatus);
 
 module.exports = router;

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../Input";
+import "./State.css";
 
-const State = ({ handleChange, isOpen }) => {
+const State = ({ handleChange }) => {
+  const [selectedOption, setSelectedOption] = useState("All");
+
   const handleStateChange = (event) => {
     const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
     handleChange(event, "State");
   };
 
@@ -23,16 +27,29 @@ const State = ({ handleChange, isOpen }) => {
   ];
 
   return (
-    <div style={{ display: isOpen ? "block" : "none" }}>
-      {stateOptions.map((option) => (
-        <Input
-          key={option.value}
-          handleChange={handleStateChange}
-          value={option.value}
-          title={option.title}
-          name="test4"
-        />
-      ))}
+    <div className="type-container">
+      <div className="options-container">
+        {stateOptions.map((option) => (
+          <label
+            key={option.value}
+            className={`option-label ${selectedOption === option.value ? "selected" : ""}`}
+            onClick={() => handleStateChange({ target: { value: option.value } })}
+          >
+            <input
+              type="radio"
+              value={option.value}
+              name="stateOption"
+              className="form-check-input"
+              checked={selectedOption === option.value}
+              onChange={handleStateChange}
+            />
+            <div className="custom-radio">
+              <div className="custom-radio-dot"></div>
+            </div>
+            {option.title}
+          </label>
+        ))}
+      </div>
     </div>
   );
 };

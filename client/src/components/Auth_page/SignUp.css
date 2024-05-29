@@ -58,14 +58,3 @@
 .signin-form .text-center a:hover {
     text-decoration: underline;
 }
-/* Override default styles for toast messages */
-.Toastify__toast-container {
-    top: 50% !important; /* Center vertically */
-    left: 50% !important; /* Center horizontally */
-    transform: translate(-50%, -50%) !important; /* Adjust to center */
-}
-
-/* Optional: Adjust the width of the toast container */
-.Toastify__toast-container--top-center {
-    width: auto !important; /* Adjust width as needed */
-}

@@ -1,27 +1,41 @@
-import React, { useState } from "react";
-import ProfileInformation from "./ProfileInformation";
-import PropertyForm from "../Post/PropertyForm"; // Assuming PropertyForm is in the same directory
-import PropertyPage from "../Post/PropertyPage"; // Assuming PropertyPage is in the same directory
+import React from "react";
+import Accordion from "react-bootstrap/Accordion";
 import "./Dashboard.css";
 
-const Dashboard = () => {
-  const [activeMenuItem, setActiveMenuItem] = useState("profile");
-
+const Dashboard = ({ activeMenuItem, setActiveMenuItem }) => {
   return (
-    
-    <div className="dash-profile-dashboard">
-      <div className="dash-sidebar-dashboard">
-        <ul>
-          <li onClick={() => setActiveMenuItem("profile")}>
-            Profile Information
-          </li>
-          <li onClick={() => setActiveMenuItem("new-post")}>New Post</li>
-          <li onClick={() => setActiveMenuItem("posts")}>Posts</li>
-        </ul>
-      </div>
-      {activeMenuItem === "profile" && <ProfileInformation />}
-      {activeMenuItem === "new-post" && <PropertyForm />}
-      {activeMenuItem === "posts" && <PropertyPage />}
+    <div className="sidebar_dash">
+      <Accordion defaultActiveKey="0">
+        {/* Profile Accordion */}
+        <div className="accordion-row">
+          <Accordion.Item eventKey="0" className="accordion-item_dash">
+            <Accordion.Header
+              className="accordion-header_dash"
+              onClick={() => setActiveMenuItem("profile")}
+            >
+              Profile
+            </Accordion.Header>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="1" className="accordion-item_dash">
+            <Accordion.Header
+              className="accordion-header_dash"
+              onClick={() => setActiveMenuItem("new-post")}
+            >
+              New Post
+            </Accordion.Header>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="2" className="accordion-item_dash">
+            <Accordion.Header
+              className="accordion-header_dash"
+              onClick={() => setActiveMenuItem("posts")}
+            >
+              Posts
+            </Accordion.Header>
+          </Accordion.Item>
+        </div>
+      </Accordion>
     </div>
   );
 };

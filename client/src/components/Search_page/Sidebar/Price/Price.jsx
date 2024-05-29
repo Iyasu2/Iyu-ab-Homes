@@ -1,9 +1,13 @@
-import React from "react";
-import Input from "../../Input";
+import React, { useState } from "react";
+import "./Price.css"; // Import custom CSS for Price component
 
-const Price = ({ handleChange, saleSelected, rentSelected, isOpen }) => {
+const Price = ({ handleChange, saleSelected, rentSelected }) => {
+  const [selectedOption, setSelectedOption] = useState("All");
+
   const handleRadioChange = (event) => {
-    handleChange(event, "Price");
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+    handleChange({ target: { value: selectedValue } }, "Price");
   };
 
   const priceRanges = [
@@ -32,16 +36,24 @@ const Price = ({ handleChange, saleSelected, rentSelected, isOpen }) => {
   });
 
   return (
-    <div style={{ display: isOpen ? "block" : "none" }}>
-      {filteredPriceRanges.map((range) => (
-        <Input
-          key={range.value}
-          handleChange={handleRadioChange}
-          value={range.value}
-          title={range.title}
-          name="price"
-        />
-      ))}
+    <div className="type-container">
+      <div className="options-container">
+        {filteredPriceRanges.map((range) => (
+          <label key={range.value} className={`option-label ${selectedOption === range.value ? "selected" : ""}`}>
+            <input
+              type="radio"
+              name="price"
+              value={range.value}
+              checked={selectedOption === range.value}
+              onChange={handleRadioChange}
+            />
+            <div className="custom-radio">
+              <div className="custom-radio-dot"></div>
+            </div>
+            {range.title}
+          </label>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 import arrow from "../../../assets/dark-arrow.png";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="hero hero-container" id="hero">
       <div className="hero-text">
@@ -13,8 +16,8 @@ const Hero = () => {
           forever home, a cozy rental, or an investment property, we've got you
           covered.
         </p>
-        <button className="btn">
-          Explore more <img src={arrow} />
+        <button className="btn" onClick={() => navigate("/")}>
+          Explore more <img src={arrow} alt="Arrow" />
         </button>
       </div>
     </div>

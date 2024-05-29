@@ -45,8 +45,9 @@ const CardComponent = ({
         }
 
         const response = await fetch(
-          `http://localhost:5000/api/properties/${id}/like`,
+          `http://localhost:5000/api/properties/${id}/like_status`,
           {
+            method: "GET",
             headers: {
               Authorization: `Bearer ${user.token}`,
             },
@@ -144,9 +145,6 @@ const CardComponent = ({
   const handleHeartClick = async (event) => {
     event.stopPropagation(); // Stop event propagation to prevent redirection
 
-    // Toggle the liked status locally
-    setLiked(!liked);
-
     try {
       const response = await fetch(
         `http://localhost:5000/api/properties/${id}/like`,
@@ -156,21 +154,22 @@ const CardComponent = ({
             Authorization: `Bearer ${user.token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: user.id, liked: !liked }), // Include user ID in the request body
+          body: JSON.stringify({ liked: !liked }), // Include user ID in the request body
         }
       );
 
-      if (!response.ok) {
-        console.error("Failed to update liked status");
-        // Revert the liked state if the update fails
+      if (response.ok) {
+        // Update the liked state based on the response
         setLiked(!liked);
+      } else {
+        console.error("Failed to update liked status");
       }
     } catch (error) {
       console.error("Error updating liked status:", error);
-      // Revert the liked state if there's an error
-      setLiked(!liked);
     }
   };
+
+  console.log("this property is ", liked);
 
   return (
     <div className="card" onClick={handleCardClick}>
@@ -246,7 +245,7 @@ const CardComponent = ({
           >
             <Card.Img
               variant="top"
-              src={images ? images : null}
+              src={images ? images[0] : null}
               style={{
                 position: "absolute",
                 top: 0,

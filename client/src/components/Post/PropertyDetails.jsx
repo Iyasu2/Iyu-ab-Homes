@@ -12,7 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { usePropertiesContext } from "../../hooks/usePropertiesContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import "./propertydetails.css";
 
 const PropertyDetails = ({ property }) => {
   const navigate = useNavigate();

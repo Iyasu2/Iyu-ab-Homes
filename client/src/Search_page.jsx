@@ -5,11 +5,37 @@ import { Container, Row, Col } from "react-bootstrap";
 import CardComponent from "./components/Search_page/Card";
 import "./Search_page.css";
 import Search from "./components/Search_page/Search/Search";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Search_page = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [query, setQuery] = useState("");
   const [properties, setProperties] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebarMin, setShowSidebarMin] = useState(false);
+
+  // Function to update sidebar visibility based on screen width
+  const handleResize = () => {
+    if (!showSidebarMin && window.innerWidth <= 768) {
+      setShowSidebar(false); // Hide sidebar on smaller screens
+    } else if (window.innerWidth > 768) {
+      setShowSidebar(true); // Show sidebar on larger screens
+      setShowSidebarMin(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize(); // Set initial sidebar visibility
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +58,11 @@ const Search_page = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Log properties state variable after it is fetched
+    console.log(properties);
+  }, [properties]);
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -163,10 +194,34 @@ const Search_page = () => {
       <Navbar />
 
       <Container fluid>
-        <div className="body-container">
-          <div className="sidebar-container">
-            <Sidebar handleChange={handleChange} />
-          </div>
+        <div className={`body-container ${showSidebar ? "show-sidebar" : ""}`}>
+          {/* Sidebar */}
+          {showSidebar || showSidebarMin ? (
+            <div className="sidebar-container">
+              <Sidebar handleChange={handleChange} />
+            </div>
+          ) : null}
+          {/* Toggle button for sidebar */}
+          {!showSidebar && (
+            <button
+              className="sidebar-toggle-button"
+              onClick={() => setShowSidebarMin(true)}
+              data-tooltip="Filter"
+            >
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </button>
+          )}
+
+          {/* Toggle button to hide sidebar */}
+          {showSidebarMin && (
+            <button
+              className="sidebar-toggle-button"
+              onClick={() => setShowSidebarMin(false)}
+            >
+              <FontAwesomeIcon icon={faAnglesLeft} />
+            </button>
+          )}
+          {/* Main Content */}
 
           <div className="main-content">
             <div className="search-container">
