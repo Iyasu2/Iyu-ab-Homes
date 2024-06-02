@@ -13,7 +13,7 @@ const requireAuth = async (req, res, next) => {
 
   try {
     console.log("SECRET:", process.env.SECRET);
-    const decoded_token = jwt.verify(token, process.env.SECRET);
+    const decoded_token = jwt.verify(token, "abel");
 
     // Fetch user from the database based on decoded token
     req.user = await User.findOne({ where: { id: decoded_token.id } });
