@@ -2,8 +2,8 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4, validate: isUuid } = require("uuid");
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.SECRET, { expiresIn: "3d" });
+const createToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.SECRET, { expiresIn: "1h" });
 };
 
 // login a user
@@ -23,17 +23,20 @@ const loginUser = async (req, res) => {
 
 // signup a user
 const signupUser = async (req, res) => {
+  console.log("JWT Secret:", process.env.SECRET);
   const { email, password, phoneNumber } = req.body;
   // Extract phoneNumber from req.body
   try {
+    console.log("JWT Secret:", process.env.SECRET); // Check if secret is logged
     console.log("Received signup request:", req.body);
     const user = await User.signup(email, password, phoneNumber);
-    // Pass phoneNumber to signup function
+    console.log("Created user:", user);
     // create a token
     const token = createToken(user.id);
-    console.log("Created user:", newUser);
-    res.status(200).json({ email, token });
+
+    res.status(200).json({ email: user.email, token });
   } catch (error) {
+    console.error("Signup Error:", error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -100,7 +103,7 @@ const getUserData = async (req, res) => {
       profileImage,
     } = user;
     const fullProfileImagePath = profileImage
-      ? `http://localhost:5000/${profileImage}`
+      ? `https://gojo-homes.vercel.app/${profileImage}`
       : null;
     res.status(200).json({
       fullName,
@@ -133,7 +136,7 @@ const getPublicUserData = async (req, res) => {
       profileImage,
     } = user;
     const fullProfileImagePath = profileImage
-      ? `http://localhost:5000/${profileImage}`
+      ? `https://gojo-homes.vercel.app/${profileImage}`
       : null;
     res.status(200).json({
       fullName,

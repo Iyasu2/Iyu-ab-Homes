@@ -20,7 +20,9 @@ const getProperties = async (req, res) => {
     // Map properties to include image URLs
     const propertiesWithImages = properties.map((property) => ({
       ...property.toJSON(),
-      images: property.images.map((image) => `http://localhost:5000/${image}`), // Assuming images are stored in the server and served at this URL
+      images: property.images.map(
+        (image) => `https://gojo-homes.vercel.app/${image}`
+      ), // Assuming images are stored in the server and served at this URL
     }));
 
     res.status(200).json(propertiesWithImages);
@@ -61,7 +63,7 @@ const getProperty = async (req, res) => {
       } = property;
 
       const imagePath =
-        images.length > 0 ? `http://localhost:5000/${images[0]}` : null;
+        images.length > 0 ? `https://gojo-homes.vercel.app/${images[0]}` : null;
 
       return {
         id,
@@ -364,7 +366,9 @@ const getPublicProperties = async (req, res) => {
     // Map properties to include image URLs
     const propertiesWithImages = properties.map((property) => ({
       ...property.toJSON(),
-      images: property.images.map((image) => `http://localhost:5000/${image}`), // Assuming images are stored in the server and served at this URL
+      images: property.images.map(
+        (image) => `https://gojo-homes.vercel.app/${image}`
+      ), // Assuming images are stored in the server and served at this URL
     }));
     res.status(200).json(propertiesWithImages);
   } catch (error) {

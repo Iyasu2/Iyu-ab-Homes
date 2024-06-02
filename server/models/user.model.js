@@ -94,13 +94,14 @@ User.signup = async function (email, password, phoneNumber) {
       throw new Error("Phone number should be maximum 10 digits");
     }
 
-    const user = await User.create({
+    const newUser = await User.create({
       email,
       password: hashedPassword,
       phoneNumber,
     });
+    console.log("newUser: ", newUser);
 
-    return user;
+    return newUser;
   } catch (error) {
     throw error;
   }
