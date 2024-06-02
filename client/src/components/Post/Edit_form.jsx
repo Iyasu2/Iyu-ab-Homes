@@ -111,7 +111,7 @@ const PropertyForm = ({ property }) => {
       console.log("property: ", formDataWithImages);
 
       const response = await fetch(
-        `http://localhost:5000/api/properties/${property.id}`,
+        `https://iyu-ab-homes.vercel.app/api/properties/${property.id}`,
         {
           method: "PATCH",
           headers: {

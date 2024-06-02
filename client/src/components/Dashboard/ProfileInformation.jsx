@@ -19,11 +19,14 @@ const ProfileInformation = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/user`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
+        const response = await fetch(
+          `https://iyu-ab-homes.vercel.app/api/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
 
         if (response.ok) {
           const userData = await response.json();
@@ -91,7 +94,7 @@ const ProfileInformation = () => {
         formData.append("profileImage", userData.profileImage);
       }
 
-      const response = await fetch(`http://localhost:5000/api/user`, {
+      const response = await fetch(`https://iyu-ab-homes.vercel.app/api/user`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -110,7 +113,7 @@ const ProfileInformation = () => {
         const { profileImage, ...updatedUserData } = responseData;
         setUserData(updatedUserData);
         // Construct absolute URL for the profile image
-        const baseUrl = "http://localhost:5000/"; // Replace this with your actual server base URL
+        const baseUrl = "https://iyu-ab-homes.vercel.app/"; // Replace this with your actual server base URL
         const profileImageUrl = `${baseUrl}${profileImage}`;
         setImagePreview(profileImageUrl);
       }

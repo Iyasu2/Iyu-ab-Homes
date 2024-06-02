@@ -12,8 +12,12 @@ const PropertyDetailsPage = () => {
   useEffect(() => {
     const fetchPropertyDetails = async () => {
       try {
-        const propertyResponse = await fetch(`http://localhost:5000/api/properties/${id}`);
-        const userResponse = await fetch(`http://localhost:5000/api/user`);
+        const propertyResponse = await fetch(
+          `https://iyu-ab-homes.vercel.app/api/properties/${id}`
+        );
+        const userResponse = await fetch(
+          `https://iyu-ab-homes.vercel.app/api/user`
+        );
 
         if (propertyResponse.ok && userResponse.ok) {
           const propertyData = await propertyResponse.json();

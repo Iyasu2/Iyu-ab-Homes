@@ -45,7 +45,7 @@ const CardComponent = ({
         }
 
         const response = await fetch(
-          `http://localhost:5000/api/properties/${id}/like_status`,
+          `https://iyu-ab-homes.vercel.app/api/properties/${id}/like_status`,
           {
             method: "GET",
             headers: {
@@ -80,7 +80,7 @@ const CardComponent = ({
 
     try {
       const userResponse = await fetch(
-        `http://localhost:5000/api/user/public/${userId}`,
+        `https://iyu-ab-homes.vercel.app/api/user/public/${userId}`,
         {
           method: "GET",
         }
@@ -90,7 +90,7 @@ const CardComponent = ({
         const userData = await userResponse.json();
 
         const response = await fetch(
-          `http://localhost:5000/api/properties/${id}/views`,
+          `https://iyu-ab-homes.vercel.app/api/properties/${id}/views`,
           {
             method: "PUT",
           }
@@ -147,7 +147,7 @@ const CardComponent = ({
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/properties/${id}/like`,
+        `https://iyu-ab-homes.vercel.app/api/properties/${id}/like`,
         {
           method: "PUT",
           headers: {

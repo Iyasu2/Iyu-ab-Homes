@@ -41,7 +41,7 @@ const Search_page = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/properties/public",
+          "https://iyu-ab-homes.vercel.app/api/properties/public",
           {
             method: "GET",
           }

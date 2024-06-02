@@ -31,12 +31,15 @@ const PropertyDetails = ({ property }) => {
       return;
     }
 
-    const response = await fetch(`/api/properties/${property._id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://iyu-ab-homes.vercel.app/api/properties/${property._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
 
@@ -185,8 +188,8 @@ const PropertyDetails = ({ property }) => {
               <br />
               <strong>Floors:</strong> {property.floors}
               <br />
-              <FontAwesomeIcon icon={faMoneyBillAlt} />{" "}
-              <strong>Price:</strong> {formatPrice(property.price)}
+              <FontAwesomeIcon icon={faMoneyBillAlt} /> <strong>Price:</strong>{" "}
+              {formatPrice(property.price)}
             </div>
           </div>
         </Card.Body>

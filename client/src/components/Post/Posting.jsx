@@ -76,7 +76,7 @@ function Post({ property }) {
         formDataToSubmit.append("built_in_area", formData.total_area);
       }
 
-      const response = await fetch("http://localhost:5000/api/post", {
+      const response = await fetch("https://iyu-ab-homes.vercel.app/api/post", {
         method: "POST",
         body: formDataToSubmit,
         headers: {

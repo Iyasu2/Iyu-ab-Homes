@@ -3,7 +3,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import PropertyDetailsWithImages from "./PropertyDetailsWithImages";
 import { Row, Col } from "react-bootstrap"; // Import Row and Col components
 
-
 const PropertyPage = ({ isAuthenticated }) => {
   const { user } = useAuthContext();
   const [properties, setProperties] = useState([]);
@@ -12,7 +11,7 @@ const PropertyPage = ({ isAuthenticated }) => {
     const fetchProperties = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/properties/all",
+          "https://iyu-ab-homes.vercel.app/api/properties/all",
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
