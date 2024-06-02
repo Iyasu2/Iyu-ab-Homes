@@ -8,7 +8,9 @@ sequelize
   .sync({ force: true }) // Use { force: true } to drop existing tables (USE WITH CAUTION!)
   .then(() => {
     console.log("All models synced successfully");
+    process.exit(0);
   })
   .catch((error) => {
     console.error("Error syncing models:", error);
+    process.exit(1);
   });
