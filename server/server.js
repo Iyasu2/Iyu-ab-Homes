@@ -7,17 +7,27 @@ const propertyRoutes = require("./routes/properties");
 const userRoutes = require("./routes/user");
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin: "https://gojo-homes.vercel.app/", // Replace with your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
-  })
-);
+// Allow requests from specific origin (your deployed frontend URL)
+const allowedOrigins = [
+  "https://gojo-homes.vercel.app",
+  "http://localhost:5173",
+]; // Replace with your actual frontend URL
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-// Respond to preflight requests
-app.options("*", cors());
 
 // Routes
 app.use("/api/properties", propertyRoutes);
