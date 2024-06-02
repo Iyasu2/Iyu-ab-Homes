@@ -5,8 +5,5 @@
     { "src": "/api/(.*)", "dest": "/server.js" },
     { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
     { "src": "/(.*)", "dest": "/server.js" }
-  ],
-  "scripts": {
-    "build": "node sync.js"
-  }
+  ]
 }
