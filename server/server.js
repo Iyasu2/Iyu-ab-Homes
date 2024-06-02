@@ -9,8 +9,8 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "https://gojo-homes-oka9kcdzf-iyasus-projects.vercel.app", // Replace with your actual frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    origin: "https://gojo-homes-20u5gubp6-iyasus-projects.vercel.app", // Replace with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
   })

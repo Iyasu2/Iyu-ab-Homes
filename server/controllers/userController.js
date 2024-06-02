@@ -26,10 +26,12 @@ const signupUser = async (req, res) => {
   const { email, password, phoneNumber } = req.body;
   // Extract phoneNumber from req.body
   try {
+    console.log("Received signup request:", req.body);
     const user = await User.signup(email, password, phoneNumber);
     // Pass phoneNumber to signup function
     // create a token
     const token = createToken(user.id);
+    console.log("Created user:", newUser);
     res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });

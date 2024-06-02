@@ -14,12 +14,7 @@ const sequelize = new Sequelize(POSTGRES_URL, {
   define: {
     timestamps: false, // Disable timestamps for simplicity
   },
-  dialectOptions: {
-    ssl: {
-      require: true, // This will help sequelize connect using SSL
-      rejectUnauthorized: false, // Allow self-signed certificates
-    },
-  },
+  dialectModule: pg,
 });
 
 module.exports = sequelize;
