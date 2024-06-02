@@ -7,8 +7,17 @@ const propertyRoutes = require("./routes/properties");
 const userRoutes = require("./routes/user");
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://gojo-homes-oka9kcdzf-iyasus-projects.vercel.app", // Replace with your actual frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Enable credentials (cookies, authorization headers) cross-origin
+  })
+);
 app.use(express.json());
+// Respond to preflight requests
+app.options("*", cors());
 
 // Routes
 app.use("/api/properties", propertyRoutes);
