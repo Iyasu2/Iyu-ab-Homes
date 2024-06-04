@@ -52,9 +52,7 @@ const updateUser = async (req, res) => {
   try {
     const { fullName, telegram, whatsapp, facebook, phoneNumber } = req.body;
     const profileImage =
-      req.files && req.files.profileImage
-        ? req.files.profileImage[0].path
-        : null;
+      req.files && req.files.profileImage ? req.files.profileImage[0].id : null;
 
     const user = await User.findByPk(userId);
     if (!user) {
