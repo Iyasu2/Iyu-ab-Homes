@@ -6,6 +6,7 @@ const User = require("../models/user.model");
 const LikedProperty = require("../models/likedProperty.model");
 
 const jwt = require("jsonwebtoken");
+const { google } = require("googleapis");
 
 // get all properties
 const getProperties = async (req, res) => {
@@ -128,7 +129,7 @@ const createProperty = async (req, res) => {
   // Add property to database
   try {
     const userId = req.user.id;
-    const images = req.files?.images?.map((file) => file.path) || []; // Get all uploaded image paths
+    const images = req.files?.images.map((file) => req.fileId) || []; // Use fileId saved in request object
     console.log("images: ", images);
 
     const property = await Property.create({
@@ -207,7 +208,7 @@ const updateProperty = async (req, res) => {
   }
 
   try {
-    const images = req.files?.images?.map((file) => file.path) || [];
+    const images = req.files?.images.map((file) => req.fileId) || []; // Use fileId saved in request object
 
     const property = await Property.findByPk(id);
     if (!property) {
