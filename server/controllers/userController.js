@@ -103,7 +103,7 @@ const getUserData = async (req, res) => {
       profileImage,
     } = user;
     const fullProfileImagePath = profileImage
-      ? `https://gojo-homes.vercel.app/${profileImage}`
+      ? `https://iyu-ab-homes.vercel.app/${profileImage}`
       : null;
     res.status(200).json({
       fullName,
@@ -136,7 +136,7 @@ const getPublicUserData = async (req, res) => {
       profileImage,
     } = user;
     const fullProfileImagePath = profileImage
-      ? `https://gojo-homes.vercel.app/${profileImage}`
+      ? `https://iyu-ab-homes.vercel.app/${profileImage}`
       : null;
     res.status(200).json({
       fullName,

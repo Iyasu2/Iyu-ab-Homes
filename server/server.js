@@ -13,6 +13,7 @@ const cors = require("cors");
 const allowedOrigins = [
   "https://gojo-homes.vercel.app",
   "http://localhost:5173",
+  "https://iyu-ab-homes.vercel.app",
 ]; // Replace with your actual frontend URL
 
 const corsOptions = {
