@@ -35,7 +35,6 @@ app.use(express.json());
 // Routes
 app.use("/api/properties", propertyRoutes);
 app.use("/api/user", userRoutes);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Welcome to My Application"); // Replace with appropriate response
