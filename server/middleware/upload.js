@@ -14,6 +14,9 @@ const drive = google.drive({ version: "v3", auth });
 // Configure multer storage
 const storage = multer.memoryStorage();
 
+// Folder ID of the shared folder in Google Drive
+const FOLDER_ID = "1gjKqsj5UZ5BQZSdzSKLWg7cgH0VYkgHC";
+
 // Custom file upload handler
 const uploadToGoogleDrive = async (req, file, cb) => {
   try {
@@ -23,7 +26,7 @@ const uploadToGoogleDrive = async (req, file, cb) => {
     // Upload file to Google Drive
     const fileMetadata = {
       name: `${Date.now()}-${file.originalname}`,
-      mimeType: file.mimetype,
+      parents: [FOLDER_ID], // Save files in the specific folder
     };
     const media = {
       mimeType: file.mimetype,
