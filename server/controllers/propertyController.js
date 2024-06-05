@@ -8,6 +8,15 @@ const LikedProperty = require("../models/likedProperty.model");
 const jwt = require("jsonwebtoken");
 const { google } = require("googleapis");
 
+// Configure Google Drive authentication (same as in the upload code)
+const auth = new google.auth.GoogleAuth({
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY),
+  scopes: ["https://www.googleapis.com/auth/drive.file"],
+});
+
+// Create a Google Drive client
+const drive = google.drive({ version: "v3", auth });
+
 // get all properties
 const getProperties = async (req, res) => {
   const userId = req.user.id;
@@ -18,13 +27,44 @@ const getProperties = async (req, res) => {
       order: [["createdAt", "DESC"]],
     });
 
+    // Function to get the image URL from Google Drive
+    const getImageUrl = async (fileId) => {
+      try {
+        // Generate a public URL for the image
+        await drive.permissions.create({
+          fileId,
+          requestBody: {
+            role: "reader",
+            type: "anyone",
+          },
+        });
+
+        const response = await drive.files.get({
+          fileId,
+          fields: "webViewLink, webContentLink",
+        });
+        return response.data.webViewLink; // Use webViewLink or webContentLink as per your requirement
+      } catch (error) {
+        console.error(
+          "Error fetching image URL from Google Drive: ",
+          error.message
+        );
+        return null;
+      }
+    };
+
     // Map properties to include image URLs
-    const propertiesWithImages = properties.map((property) => ({
-      ...property.toJSON(),
-      images: property.images.map(
-        (image) => `https://iyu-ab-homes.vercel.app/${image}`
-      ), // Assuming images are stored in the server and served at this URL
-    }));
+    const propertiesWithImages = await Promise.all(
+      properties.map(async (property) => {
+        const imageUrls = await Promise.all(
+          property.images.map((image) => getImageUrl(image))
+        );
+        return {
+          ...property.toJSON(),
+          images: imageUrls.filter((url) => url !== null), // Filter out any null URLs
+        };
+      })
+    );
 
     res.status(200).json(propertiesWithImages);
   } catch (error) {
