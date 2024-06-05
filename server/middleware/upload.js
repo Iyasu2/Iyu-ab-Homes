@@ -29,7 +29,7 @@ const uploadToGoogleDrive = async (req, file, cb) => {
       parents: [FOLDER_ID], // Save files in the specific folder
     };
     const media = {
-      mimeType: file.mimetype,
+      mimeType: file.mimetype, // Ensure mimeType is correctly set
       body: bufferStream,
     };
 
@@ -50,6 +50,10 @@ const uploadToGoogleDrive = async (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
+    // Validate MIME type if needed
+    if (!file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only images are allowed"));
+    }
     uploadToGoogleDrive(req, file, (err, id) => {
       if (err) return cb(err);
       req.fileId = id; // Save file ID to request object for later use
